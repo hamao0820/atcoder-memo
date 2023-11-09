@@ -23,6 +23,16 @@ const config: DocsThemeConfig = {
   footer: {
     text: "MIT 2023 © hamao.",
   },
+  faviconGlyph: "📝",
+  useNextSeoProps: () => ({
+    defaultTitle: "hamaoの競プロメモ",
+    titleTemplate: "%s | hamaoの競プロメモ",
+    description: "hamaoの競プロのメモです。",
+    twitter: {
+      handle: "@hamao_0820",
+      cardType: "summary_large_image",
+    },
+  }),
 };
 
 export default config;
