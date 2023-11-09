@@ -27,9 +27,10 @@ const config: DocsThemeConfig = {
   useNextSeoProps: () => ({
     defaultTitle: "hamaoの競プロメモ",
     titleTemplate: "%s | hamaoの競プロメモ",
-    description: "hamaoの競プロのメモです。",
+    description: "hamaoの競プロのメモ用のサイト",
     twitter: {
       handle: "@hamao_0820",
+      site: "@hamao_0820",
       cardType: "summary_large_image",
     },
   }),
