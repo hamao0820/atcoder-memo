@@ -1,0 +1,55 @@
+---
+title: C - H and V
+tags:
+  - bit全探索
+  - 再帰関数
+---
+
+# ABC C - H and V
+
+## キーワード
+
+- bit 全探索
+- 再帰関数
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc173/tasks/abc173_c)
+
+[解答](https://atcoder.jp/contests/abc173/submissions/41452740)
+
+```ts
+const rec = (a: [], b: []) => {
+  let ans = 0;
+  if (a.length === M && b.length === N) return check(a, b);
+  if (a.length === M) {
+    for (let i = 0; i < 2; i++) {
+      const res = rec(a, [...b, i]);
+      /*
+                resを利用してansの更新
+            */
+    }
+    return ans;
+  }
+  if (b.length === N) {
+    for (let i = 0; i < 2; i++) {
+      const res = rec([...a, i], b);
+      /*
+                resを利用してansの更新
+            */
+    }
+    return ans;
+  }
+  for (let i = 0; i < 2; i++) {
+    for (let j = 0; j < 2; j++) {
+      const res = rec([...a, i], [...b, j]);
+      /*
+                resを利用してansの更新
+            */
+    }
+  }
+  return ans;
+};
+```
+
+二重の bit 全探索。まずは両方をそれぞれ二重 for 文で更新していく。片方が最後まで行くと、片方は固定したまま、もう片方について bit 全探索を続ける。どちらかが最後まで行ったときと、どちらもまだ途中の場合で、それぞれ`return`を挟まないと、同じ組み合わせが重複してしまう。

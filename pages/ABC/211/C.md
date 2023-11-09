@@ -1,0 +1,25 @@
+---
+title: C - chokudai
+tags:
+  - DP
+  - 部分列DP
+---
+
+# ABC211 C - chokudai
+
+## キーワード
+
+- DP
+- 部分列 DP
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc211/tasks/abc211_c)
+
+[提出 1](https://atcoder.jp/contests/abc211/submissions/44002265)
+
+[提出 2](https://atcoder.jp/contests/abc211/submissions/44002581)
+
+S の i 文字目までを使って、chokudai の k 文字目までを作る組み合わせを表で書く。簡単なところから順番に埋めていく。
+
+![表](/dp_table.png)

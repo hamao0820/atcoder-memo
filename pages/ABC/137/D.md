@@ -1,0 +1,27 @@
+---
+title: D - Summer Vacation
+tags:
+  - 貪欲法
+  - heap
+---
+
+# ABC137 D - Summer Vacation
+
+## キーワード
+
+- 貪欲法
+- heap
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc137/tasks/abc137_d)
+
+[提出](https://atcoder.jp/contests/abc137/submissions/42823073)
+
+M-k 日は A が k 以下の中から B が最大のものを選択する。そのまま実装すると O(N^2)になり TLE。heap を使うことで
+
+- 挿入 - O(log(N))
+
+- 最大値取得 - O(log(N))
+
+で実装できる。

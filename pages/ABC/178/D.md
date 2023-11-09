@@ -1,0 +1,27 @@
+---
+title: D - Redistribution
+tags:
+  - 動的計画法
+---
+
+# ABC178 D - Redistribution
+
+## キーワード
+
+- 動的計画法
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc178/tasks/abc178_d)
+
+[提出](https://atcoder.jp/contests/abc178/submissions/41921403)
+
+[提出](https://atcoder.jp/contests/abc178/submissions/41921458)
+
+[解説](https://atcoder.jp/contests/abc178/editorial/101)
+
+$$A[n]　を S = n のときの解とすると$$
+$$n \geqq 3 のとき$$
+$$A[n] = A[n-3] + \underbrace{A[n-4] + \cdots + A[0]}_{A[n-1]}$$
+
+$$\therefore A[n] = A[n-1] + A[n-3]$$

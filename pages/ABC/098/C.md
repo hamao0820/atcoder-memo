@@ -1,0 +1,27 @@
+---
+title: C - Attention
+tags:
+  - 累積和
+  - 動的計画法
+---
+
+# ABC098 C - Attention
+
+## キーワード
+
+- 累積和
+- 動的計画法
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc098/tasks/arc098_a)
+
+[提出](https://atcoder.jp/contests/abc098/submissions/41114783)
+
+S を東西それぞれについて 1/0 の数列(E_n, W_n)に置き換えると、i 番目をリーダーにした際に向きを変えないといけない人数が E_n, W_n の累積和 Sw_n, Se_n について
+
+Sw_n[1:i]
+
+Se_n[i:N-1]
+
+の和で表される。

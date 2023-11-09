@@ -1,0 +1,21 @@
+---
+title: D - Dice in Line
+tags:
+  - 累積和
+---
+
+# ABC154 D - Dice in Line
+
+## キーワード
+
+- 累積和
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc154/tasks/abc154_d)
+
+[提出](https://atcoder.jp/contests/abc154/submissions/41130150)
+
+インデックスに注意。
+
+どこからどこまでかをしっかり考えるように。
