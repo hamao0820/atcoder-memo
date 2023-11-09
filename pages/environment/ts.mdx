@@ -1,0 +1,86 @@
+# Go の環境
+
+## Node のバージョン
+
+```console
+$ node --version
+v18.6.0
+
+$ npm --version
+8.19.2
+```
+
+## ライブラリ
+
+```json filename="package.json"
+{
+  "name": "atcoder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4",
+    "@types/tstl": "^1.5.7"
+  },
+  "dependencies": {
+    "tstl": "^2.5.13"
+  }
+}
+```
+
+## テンプレート
+
+```ts filename="main.ts"
+import * as fs from "fs";
+
+const chars = [..."abcdefghijklmnopqrstuvwxyz"];
+
+class Reader {
+  readonly input: string[];
+  private index: number = 0;
+
+  constructor() {
+    this.input = fs.readFileSync("/dev/stdin", "utf8").trim().split("\n");
+  }
+
+  rl(): string {
+    return this.input[this.index++];
+  }
+
+  rn(): number {
+    return Number(this.input[this.index++]);
+  }
+
+  rb(): bigint {
+    return BigInt(this.input[this.index++]);
+  }
+
+  rln(): number[] {
+    const line = this.input[this.index++].split(" ");
+    return line.map(Number);
+  }
+
+  rlb(): bigint[] {
+    const line = this.input[this.index++].split(" ");
+    return line.map(BigInt);
+  }
+
+  rls(): string[] {
+    return this.input[this.index++].split(" ");
+  }
+}
+
+const main = () => {
+  const r: Reader = new Reader();
+
+  // console.log(ans);
+};
+
+main();
+```
