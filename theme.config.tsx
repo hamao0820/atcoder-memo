@@ -33,6 +33,19 @@ const config: DocsThemeConfig = {
       site: "@hamao_0820",
       cardType: "summary_large_image",
     },
+    openGraph: {
+      url: "https://atcoder-memo.vercel.app/",
+      title: "hamaoの競プロメモ",
+      description: "hamaoの競プロのメモ用のサイト",
+      images: [
+        {
+          url: "/hamao-log-square.png",
+          width: 1200,
+          height: 630,
+          alt: "hamaoの競プロメモ",
+        },
+      ],
+    }
   }),
 };
 
