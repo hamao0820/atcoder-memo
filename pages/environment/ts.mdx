@@ -34,6 +34,24 @@ $ npm --version
 }
 ```
 
+## ディレクトリ構成
+
+import { FileTree } from "nextra/components";
+
+<FileTree>
+  <FileTree.File name="tsconfig.json" />
+  <FileTree.File name="package.json" />
+  <FileTree.File name="package-lock.json" />
+  <FileTree.Folder name="contests" defaultOpen>
+    <FileTree.Folder name="abc001" defaultOpen>
+      <FileTree.Folder name="a" defaultOpen>
+        <FileTree.Folder name="tests"></FileTree.Folder>
+        <FileTree.File name="main.ts" />
+      </FileTree.Folder>
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
 ## テンプレート
 
 ```ts filename="main.ts"

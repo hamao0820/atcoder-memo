@@ -36,6 +36,23 @@ require (
 )
 ```
 
+## ディレクトリ構成
+
+import { FileTree } from "nextra/components";
+
+<FileTree>
+  <FileTree.File name="go.mod" />
+  <FileTree.File name="go.sum" />
+  <FileTree.Folder name="contests" defaultOpen>
+    <FileTree.Folder name="abc001" defaultOpen>
+      <FileTree.Folder name="a" defaultOpen>
+        <FileTree.Folder name="tests"></FileTree.Folder>
+        <FileTree.File name="main.go" />
+      </FileTree.Folder>
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
 ## テンプレート
 
 ```go filename="main.go"
