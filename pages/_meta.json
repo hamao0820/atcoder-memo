@@ -7,6 +7,10 @@
   },
   "index": "HOME",
   "environment": "実行環境",
+  "-- contests": {
+    "type": "separator",
+    "title": "Contests"
+  },
   "typical90": "典型90",
   "abc": "ABC",
   "agc": "AGC"
