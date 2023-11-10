@@ -1,0 +1,109 @@
+---
+title: UnionFind
+tags:
+  - union find
+  - UnionFind
+  - UF
+  - Disjoint Set Union
+  - DSU
+---
+
+# UnionFind
+
+## キーワード
+
+- union find
+- UnionFind
+- UF
+- Disjoint Set Union
+- DSU
+
+## 概要
+
+Union Find はグループ分けを効率的に管理する, 根付き木を用いたデータ構造.
+
+## 構造
+
+```go
+type UnionFind struct {
+    n    int
+    root []int
+}
+```
+
+## 操作
+
+| 操作        | 引数 | 返り値                        |
+| ----------- | ---- | ----------------------------- |
+| constructor | n    | UnionFind                     |
+| isSame      | x, y | x, y を含むグループが同じか   |
+| unite       | x, y | x, y を含むグループを併合する |
+| find(root)  | x    | x の根を返す                  |
+
+グループの代表者を root で管理し, 代表者を根にもつ木を表現する.
+
+## 計算量
+
+| 操作        | 計算量(平均)            | 計算量(最悪)    |
+| ----------- | ----------------------- | --------------- |
+| constructor | $\mathrm{O}(N)$         | $\mathrm{O}(N)$ |
+| isSame      | $\mathrm{O}(\alpha(N))$ |                 |
+| unite       | $\mathrm{O}(\alpha(N))$ |                 |
+| find(root)  | $\mathrm{O}(\alpha(N))$ |                 |
+
+ここで, $\alpha$ はアッカーマン関数の逆関数. 実質的に $\mathrm{O}(1)$ と考えて良い.
+
+## 実装
+
+```go
+type UnionFind struct {
+	n    int
+	root []int
+}
+
+func newUnionFind(n int) UnionFind {
+	root := make([]int, n)
+	for i := 0; i < n; i++ {
+		root[i] = -1
+	}
+	uf := UnionFind{n: n, root: root}
+	return uf
+}
+func (u *UnionFind) find(x int) int {
+	if u.root[x] < 0 {
+		return x
+	}
+	u.root[x] = u.find(u.root[x]) // 再帰で根に直接繋ぎ直す
+	return u.root[x]
+}
+func (u *UnionFind) unite(x, y int) {
+	x = u.find(x) // xを根に書き換え
+	y = u.find(y) // yを根に書き換え
+	if x == y {
+		return
+	}
+	if -u.root[x] < -u.root[y] {
+		x, y = y, x
+	} // xの集合の要素数の方が大きいようにスワップ
+	u.root[x] += u.root[y]
+	u.root[y] = x
+}
+func (u *UnionFind) isSame(x, y int) bool {
+	return u.find(x) == u.find(y)
+}
+func (u *UnionFind) size(x int) int {
+	return -u.root[u.find(x)]
+}
+```
+
+## 例題
+
+- [典型 90 | 012 - Red Painting（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_l)
+
+## 引用
+
+- https://zenn.dev/isseii/articles/algo-union-find
+- https://algo-method.com/descriptions/136
+- https://37zigen.com/union-find-complexity-1/#find
+- https://qiita.com/kopricky/items/3e5847ab1451fe990367
+- https://atcoder.github.io/ac-library/document_ja/dsu.html
