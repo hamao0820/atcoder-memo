@@ -1,0 +1,57 @@
+---
+title: 033 - Not Too Bright（★2）
+tags:
+  - エッジケース
+---
+
+# 033 - Not Too Bright（★2）
+
+## キーワード
+
+- エッジケーズ
+
+## 解説
+
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ag)
+
+盤面を左上から $2 \times 2$ の正方形分割していけば良いので,
+
+```go
+ans := int(math.Ceil(float64(h)/2.0)) * int(math.Ceil(float64(w)/2.0))
+```
+
+で ok.
+
+import { Callout } from "nextra/components";
+
+<Callout type="warning" emoji="⚠️">
+  エッジケースに注意
+</Callout>
+
+問題は, '完全に含まれる'という条件から, 例えば $h = 1, w = 3$ のとき, 完全に含まれる $2 \times 2$ の正方形は存在しないので, 全てのマスを点灯させることはできる.
+
+```go
+if h == 1 || w == 1 {
+  writeLine(h * w)
+  return
+}
+```
+
+## 提出コード
+
+```go
+func main() {
+	var h, w int
+
+	scanIntVariables(&h, &w)
+
+	if h == 1 || w == 1 {
+		writeLine(h * w)
+		return
+	}
+
+	ans := int(math.Ceil(float64(h)/2.0)) * int(math.Ceil(float64(w)/2.0))
+
+	writeLine(ans)
+}
+```
