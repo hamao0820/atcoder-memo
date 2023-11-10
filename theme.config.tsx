@@ -23,6 +23,7 @@ const config: DocsThemeConfig = {
   footer: {
     text: "MIT 2023 © hamao.",
   },
+  sidebar: { defaultMenuCollapseLevel: 1 },
   faviconGlyph: "📝",
   useNextSeoProps: () => ({
     defaultTitle: "hamaoの競プロメモ",
@@ -45,7 +46,7 @@ const config: DocsThemeConfig = {
           alt: "hamaoの競プロメモ",
         },
       ],
-    }
+    },
   }),
 };
 
