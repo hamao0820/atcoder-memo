@@ -1,4 +1,10 @@
 {
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://twitter.com/hamao_0820",
+    "newWindow": true
+  },
   "index": "HOME",
   "environment": "実行環境",
   "typical90": "典型90",
