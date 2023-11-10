@@ -42,7 +42,7 @@
 - [x] 001 [Yokan Party（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_a) [2023-10-20]
 - [x] 003 [Longest Circular Road（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_c) [2023-11-08]
 - [x] 008 [AtCounter（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_h) [2023-11-08]
-- [ ] 012 [Red Painting（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_l)
+- [X] 012 [Red Painting（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_l) [2023-11-10]
 - [ ] 026 [Independent Set on a Tree（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_z)
 - [ ] 028 [Cluttered Paper（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ab)
 - [ ] 034 [There are few types of elements（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ah)
