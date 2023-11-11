@@ -46,7 +46,7 @@
 - [X] 026 [Independent Set on a Tree（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_z) [2023-11-11]
 - [X] 028 [Cluttered Paper（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ab) [2023-11-11]
 - [X] 034 [There are few types of elements（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ah) [2023-11-11]
-- [ ] 042 [Multiple of 9（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ap)
+- [X] 042 [Multiple of 9（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ap) [2023-11-11]
 - [ ] 043 [Maze Challenge with Lack of Sleep（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_aq)
 - [ ] 058 [Original Calculator（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bf)
 - [ ] 063 [Monochromatic Subgrid（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bk)
