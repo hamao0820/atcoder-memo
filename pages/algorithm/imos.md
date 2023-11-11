@@ -1,0 +1,77 @@
+---
+title: いもす法
+tags:
+  - いもす法
+  - 二次元いもす法
+---
+
+# いもす法
+
+## キーワード
+
+- いもす法
+- 二次元いもす法
+
+## 概要
+
+累積和を応用したアルゴリズム.
+区間の入口と出口で要素分の加算・減算を行って累積和を求めることで, 任意の区間に要素がいくつ収まっているかを高速に計算することが出来る.
+
+二次元いもす法では, 矩形の重なった部分の面積を求めることができる.
+
+一次元の場合は, 一次元配列を 0 で初期化し, 入った時刻を $+1$ , 出た時刻を $-1$ していく. それらの累積和をとることで, 各時刻の人数がわかる.
+
+二次元の場合は, 二次元配列を 0 で初期化し, 矩形の左下, 右上を $+1$ , 左上, 右下を $-1$ していく. その後, x 軸方向, y 軸方向に順に累積和を取ることで, 同じ左表に重なった枚数が得られる.
+
+## 計算量
+
+一次元の場合は $\mathrm{O}(N)$ , 二次元の場合は $\mathrm{O}(H+W)$
+
+## 応用例
+
+- 喫茶店の同時刻の最大客数
+- 矩形の重なりの最大枚数
+
+## 実装
+
+二次元いもす法
+
+```go
+grid := make([][]int, 1001)
+for i := 0; i < 1001; i++ {
+    grid[i] = make([]int, 1001)
+}
+
+for i := 0; i < N; i++ {
+    var lx, ly, rx, ry int
+    scanIntVariables(&lx, &ly, &rx, &ry)
+    grid[ly][lx] += 1
+    grid[ry][rx] += 1
+    grid[ry][lx] -= 1
+    grid[ly][rx] -= 1
+}
+
+for y := 0; y <= 1000; y++ {
+    for x := 1; x <= 1000; x++ {
+        grid[y][x] += grid[y][x-1]
+    }
+}
+
+for x := 0; x <= 1000; x++ {
+    for y := 1; y <= 1000; y++ {
+        grid[y][x] += grid[y-1][x]
+    }
+}
+```
+
+## 例題
+
+- [典型 90 | 028 - Cluttered Paper（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ab)
+- [ABC014 C - AtColor](https://atcoder.jp/contests/abc014/tasks/abc014_3)
+- [ABC127 C - Prison](https://atcoder.jp/contests/abc127/tasks/abc127_c)
+
+## 引用
+
+- https://imoz.jp/algorithms/imos_method.html
+- https://jaigotec.com/algorithm_imos/
+- https://qiita.com/imachan567/items/37ecd963f4643a84f5be
