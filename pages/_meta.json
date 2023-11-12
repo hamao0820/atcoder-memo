@@ -13,6 +13,11 @@
   },
   "data-structure": "データ構造",
   "algorithm": "アルゴリズム",
+  "-- library": {
+    "type": "separator",
+    "title": "Library"
+  },
+  "library": "ライブラリ",
   "-- contests": {
     "type": "separator",
     "title": "Contests"

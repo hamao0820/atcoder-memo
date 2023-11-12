@@ -1,0 +1,116 @@
+---
+title: Combination
+tags:
+  - Combination
+  - 組み合わせ
+---
+
+# Combination
+
+## キーワード
+
+- Combination
+- 組み合わせ
+
+## 概要
+
+配列から $r$ 個を選んで, 長さ $r$ の配列を返す.
+
+## 計算量
+
+$\mathrm{O}({}_n C_r) = \mathrm{O}(\frac{n!}{r!(n-r)!})$
+
+## 応用例
+
+- グラフの全探索
+
+## 実装
+
+go:
+
+```go
+func Combinations[T any](iterable []T, r int) [][]T {
+	n := len(iterable)
+
+	if n < r {
+		return [][]T{}
+	}
+
+	var result [][]T
+	indices := make([]int, r)
+	for i := 0; i < r; i++ {
+		indices[i] = i
+	}
+
+	for {
+		currentCombination := make([]T, r)
+		for i, idx := range indices {
+			currentCombination[i] = iterable[idx]
+		}
+		result = append(result, currentCombination)
+
+		var i int
+		for i = r - 1; i >= 0; i-- {
+			if indices[i] != n-(r-i) {
+				break
+			}
+		}
+
+		if i == -1 {
+			break
+		}
+
+		indices[i]++
+		for j := i + 1; j < r; j++ {
+			indices[j] = indices[j-1] + 1
+		}
+	}
+
+	return result
+}
+```
+
+TS:
+
+```ts
+function* combinations<T>(iterable: Iterable<T>, r: number) {
+  const pool = [...iterable];
+  const n = pool.length;
+  if (n < r) return;
+
+  const indices = [...new Array(r)].map((_, i) => i);
+  yield indices.map((i) => pool[i]);
+  while (true) {
+    let i;
+    for (i = r - 1; i >= 0; i--) {
+      if (indices[i] !== n - (r - i)) {
+        break;
+      }
+    }
+    if (i === -1) return;
+    indices[i]++;
+    for (let j = i + 1; j < r; j++) {
+      indices[j] = indices[j - 1] + 1;
+    }
+    yield indices.map((i) => pool[i]);
+  }
+}
+```
+
+## ベンチマーク
+
+go で行うと以下のようになった.
+
+|  n  |  r  |    nCr    |  ns/op   |
+| :-: | :-: | :-------: | :------: |
+| 10  |  5  |    252    |  10891   |
+| 20  |  6  |  38,760   | 2734329  |
+| 28  |  7  | 1,184,040 | 94758698 |
+
+## 例題
+
+- [ABC328 | E - Modulo MST](https://atcoder.jp/contests/abc328/tasks/abc328_e)
+
+## 引用
+
+- https://syakoo-lab.com/writings/20210721
