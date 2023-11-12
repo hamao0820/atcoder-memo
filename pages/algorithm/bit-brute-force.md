@@ -1,0 +1,49 @@
+---
+title: bit全探索
+tags:
+  - bit全探索
+---
+
+# bit 全探索
+
+## キーワード
+
+- bit 全探索
+
+## 概要
+
+bit を用いた全探索の手法.
+
+$\{0,1, \dots, N-1\}$ の全ての部分列を列挙できる.
+
+## 計算量
+
+$\mathrm{O}(N2^N)$
+
+## 実装
+
+```go
+for b := 0; b < (1 << n); b++ {
+    for i := 0; i < n; i++ {
+        if (b & (1 << i)) == 0 {
+				continue
+		}
+
+        // ...
+    }
+}
+```
+
+`1 << n`で $1\underbrace{0\dots0}_{n}{}_{(2)} = 2^n{}_{(10)}$ となるので, `b`は $0$ から $2^n - 1$ まで動く.
+
+その後, 各`i` $=1,\dots,n-1$ について, `1 << i`で $1\underbrace{0\dots0}_{i}{}_{(2)}$ となるので, `(b & (1 << i))`で $i$ 桁目が $1$ かどうか判定する.
+
+go の場合は, if 文の条件を`bool`型しかいれることができないので, $0$ の場合は早期 return する形にしている.
+
+## 例題
+
+- [典型 90 | 063 - Monochromatic Subgrid（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bk)
+
+## 引用
+
+- https://drken1215.hatenablog.com/entry/2019/12/14/171657
