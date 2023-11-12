@@ -46,6 +46,8 @@ tags:
 より, 最大の場合でも, $\binom{8}{7} = 1,184,040 = \text{O}(10^6)$ .  
 全探索が可能.
 
+全探索は[combination](../../library/combination.md)を使用する.
+
 グラフ(頂点の部分とそれらを結ぶ辺の部分)が与えれた時, そのグラフが全域木であるかどうかは[UnionFInd](../../data-structure/union-find.md)を用いれば可能.
 
 #### 全域木のチェック
@@ -73,51 +75,45 @@ uf.size(1) == N
 ## 提出コード
 
 ```go
-func combinations[T any](iterable []T, r int) <-chan []T {
-	c := make(chan []T)
+func Combinations[T any](iterable []T, r int) [][]T {
 	n := len(iterable)
 
 	if n < r {
-		close(c)
-		return c
+		return [][]T{}
 	}
 
-	go func() {
-		defer close(c)
+	var result [][]T
+	indices := make([]int, r)
+	for i := 0; i < r; i++ {
+		indices[i] = i
+	}
 
-		indices := make([]int, r)
-		for i := 0; i < r; i++ {
-			indices[i] = i
+	for {
+		currentCombination := make([]T, r)
+		for i, idx := range indices {
+			currentCombination[i] = iterable[idx]
+		}
+		result = append(result, currentCombination)
+
+		var i int
+		for i = r - 1; i >= 0; i-- {
+			if indices[i] != n-(r-i) {
+				break
+			}
 		}
 
-		for {
-			result := make([]T, r)
-			for i, idx := range indices {
-				result[i] = iterable[idx]
-			}
-			c <- result
-
-			var i int
-			for i = r - 1; i >= 0; i-- {
-				if indices[i] != n-(r-i) {
-					break
-				}
-			}
-
-			if i == -1 {
-				return
-			}
-
-			indices[i]++
-			for j := i + 1; j < r; j++ {
-				indices[j] = indices[j-1] + 1
-			}
+		if i == -1 {
+			break
 		}
-	}()
 
-	return c
+		indices[i]++
+		for j := i + 1; j < r; j++ {
+			indices[j] = indices[j-1] + 1
+		}
+	}
+
+	return result
 }
-
 func main() {
 	var n, m, k int
 	scanIntVariables(&n, &m, &k)
@@ -134,7 +130,7 @@ func main() {
 	}
 
 	ans := 1000000000000000000
-	for comb := range combinations(indices, n-1) {
+	for _, comb := range combinations(indices, n-1) {
 		uf := newUnionFind(n)
 		now := 0
 		ok := true
