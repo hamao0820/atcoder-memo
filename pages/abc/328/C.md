@@ -1,0 +1,45 @@
+---
+title: C - Consecutive
+tags:
+  - 累積和
+---
+
+# C - Consecutive
+
+## キーワード
+
+- 累積和
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc328/tasks/abc328_c)
+
+ある区間に含まれる個数を問われたら, 累積和か尺取り法を疑う.  
+今回は, 複数の区間に対して同様の操作をする必要があるので, 累積和を用いる.
+
+$i$ 文字目までに含まれる同じ文字が含まれる回数を累積和`A`として保存しておいて, `l`, `r`に対して, `A[r-1] - A[l-1]`を出力すれば良い.
+
+## 提出コード
+
+```go
+func main() {
+	var n, q int
+	scanIntVariables(&n, &q)
+	S := readString()
+
+	A := make([]int, n)
+	for i := 1; i < n; i++ {
+		if string(S[i-1]) == string(S[i]) {
+			A[i] = A[i-1] + 1
+			continue
+		}
+		A[i] = A[i-1]
+	}
+
+	for i := 0; i < q; i++ {
+		var l, r int
+		scanIntVariables(&l, &r)
+		writeLine(A[r-1] - A[l-1])
+	}
+}
+```
