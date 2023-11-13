@@ -52,7 +52,7 @@
 - [X] 063 [Monochromatic Subgrid（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bk) [2023-11-12]
 - [X] 070 [Plant Planning（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_br) [2023-11-13]
 - [X] 072 [Loop Railway Plan（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bt) [2023-11-13]
-- [ ] 085 [Multiplication 085（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_cg)
+- [X] 085 [Multiplication 085（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_cg) [2023-11-13]
 - [ ] 006 [Smallest Subsequence（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_f)
 - [ ] 013 [Passing（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_m)
 - [ ] 021 [Come Back in One Piece（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_u)

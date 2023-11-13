@@ -1,0 +1,95 @@
+---
+title: 085 - Multiplication 085（★4）
+tags:
+  - 約数
+---
+
+# 085 - Multiplication 085（★4）
+
+## キーワード
+
+## 解説
+
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_cg)
+
+制約
+
+$1 \le K \le 10^{12}$
+
+より, $1 \le a \le b \le c \le K$ を満たす全ての $a,b,c$ を調べるのは不可能.
+
+題意を満たす時, $a,b,c$ は $K$ の約数となるため, K の約数についてのみ調べればよい. 全ての約数の列挙は, $\mathrm{O}(\sqrt{K})$ で可能.
+
+import { Callout } from "nextra/components";
+
+<Callout emoji="💡">
+枝刈り全探索でも可能
+</Callout>
+
+$a \le b \le c \le K$ という条件から, 少なくとも $a \le \sqrt[3]{x}$ が言える.  
+$a^2 \ge K$ あるいは $ab^2 \ge K$ となった時点で打ち切る.  
+$c$ についてはループを回さず, $K$ が $ab$ で割り切れるかつ $K / ab \ge b$ を満たせば`ans`をインクリメントする.
+
+## 提出コード
+
+約数のみ:
+
+```go
+func main() {
+	var k int
+	scanIntVariables(&k)
+
+	divisors := make([]int, 0)
+	for i := 1; i <= k; i++ {
+		if i*i > k {
+			break
+		}
+		if k%i == 0 {
+			divisors = append(divisors, i)
+		}
+	}
+
+	ans := 0
+	for i := 0 ;i<len(divisors);i++{
+		a := divisors[i]
+		if a * a > k{
+			break
+		}
+		for j := i;j<len(divisors);j++{
+			b := divisors[j]
+			if a * b * b > k{
+				break
+			}
+			if k%(a*b) == 0 && k/(a*b) >= b{
+				ans++
+			}
+		}
+	}
+	writeLine(ans)
+}
+```
+
+枝刈り全探索:
+
+```go
+func main() {
+	var k int
+	scanIntVariables(&k)
+
+	ans := 0
+	for a:=1;a <= k; a++ {
+		if a * a * a > k {
+			break
+		}
+		for b:=a;b <= k; b++ {
+			if a * b * b > k {
+				break
+			}
+			if k % (a * b) == 0 && k / (a * b) >= b  {
+                ans++
+			}
+		}
+	}
+	writeLine(ans)
+}
+```
