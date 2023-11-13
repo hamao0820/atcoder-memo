@@ -48,7 +48,7 @@
 - [X] 034 [There are few types of elements（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ah) [2023-11-11]
 - [X] 042 [Multiple of 9（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ap) [2023-11-11]
 - [ ] 043 [Maze Challenge with Lack of Sleep（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_aq)
-- [ ] 058 [Original Calculator（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bf)
+- [X] 058 [Original Calculator（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bf) [2023-11-13]
 - [X] 063 [Monochromatic Subgrid（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bk) [2023-11-12]
 - [ ] 070 [Plant Planning（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_br)
 - [ ] 072 [Loop Railway Plan（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bt)
