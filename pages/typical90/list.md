@@ -51,7 +51,7 @@
 - [X] 058 [Original Calculator（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bf) [2023-11-13]
 - [X] 063 [Monochromatic Subgrid（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bk) [2023-11-12]
 - [X] 070 [Plant Planning（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_br) [2023-11-13]
-- [ ] 072 [Loop Railway Plan（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bt)
+- [X] 072 [Loop Railway Plan（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bt) [2023-11-13]
 - [ ] 085 [Multiplication 085（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_cg)
 - [ ] 006 [Smallest Subsequence（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_f)
 - [ ] 013 [Passing（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_m)
