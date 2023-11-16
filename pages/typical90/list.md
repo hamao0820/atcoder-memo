@@ -57,7 +57,7 @@
 - [ ] 013 [Passing（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_m)
 - [ ] 021 [Come Back in One Piece（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_u)
 - [ ] 029 [Long Bricks（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ac)
-- [ ] 030 [K Factors（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ad)
+- [X] 030 [K Factors（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ad) [2023-11-16]
 - [ ] 036 [Max Manhattan Distance（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_aj)
 - [ ] 037 [Don't Leave the Spice（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ak)
 - [ ] 039 [Tree Distance（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_am)
