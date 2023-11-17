@@ -1,0 +1,72 @@
+---
+title: 45度回転
+tags:
+  - 45度回転
+  - マンハッタン距離
+---
+
+# 45 度回転
+
+## キーワード
+
+- 45 度回転
+- マンハッタン距離
+
+## 概要
+
+$(x, y)$ 座標を $(X, Y) = (x - y, x + y)$ に座標変換する操作.
+
+$(x, y)$ に $\frac{\pi}{4}$ の回転行列をかけると,
+
+$$
+\begin{pmatrix}
+\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\
+\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y \\
+\end{pmatrix}
+= \frac{1}{\sqrt{2}}
+\begin{pmatrix}
+x - y\\
+x + y \\
+\end{pmatrix}
+$$
+
+が得られる.
+
+$(x, y)$ 座標上の 2 点 $(x_1, y_1), (x_2, y_2)$ のマンハッタン距離は,
+
+$$
+\begin{equation*}
+\begin{split}
+d &= |x_1 - x_2| - |y_1 - y_2| \\
+  &= \max((x_1 - x_2) + (y_1 - y_2), (x_1 - x_2) + (y_2 - y_1), (x_2 - x_1) + (y_1 - y_2), (x_2 - x_1) + (y_2 - y_1)) \\
+  &= \max((x_1 + y_1) - (x_2 + y_2), (x_1 - y_1) - (x_2 - y_2), -(x_1 - y_1) + (x_2 - y_2), -(x_1 + y_1) + (x_2 + y_2)) \\
+  &= \max(X_1 - X_2, Y_1 - Y_2, Y_2 - Y_1, X_2 - X_1) \\
+  &= \max(|X_1 - X_2|, |Y_1 - Y_2|)
+\end{split}
+\end{equation*}
+$$
+
+が成り立つ.
+
+上の等式からわかるように, $(X_1, Y_1)$ から等距離の点は, $(X_1, Y_1)$ を中心(対角線の交点)とする正方形上に存在する.
+
+## 計算量
+
+変形自体は $\mathrm{O}(1)$
+
+## 応用例
+
+- 最大距離の点の取得
+- 等距離の点の取得
+
+## 例題
+
+- [典型 90 | 036 - Max Manhattan Distance（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_aj)
+
+## 引用
+
+- https://scrapbox.io/magurofly/%E3%83%9E%E3%83%B3%E3%83%8F%E3%83%83%E3%82%BF%E3%83%B3%E8%B7%9D%E9%9B%A2%E3%81%A845%E5%BA%A6%E5%9B%9E%E8%BB%A2
