@@ -1,12 +1,35 @@
 # 競プロメモ
 
-AtCoder のメモをまとめていきます.
+AtCoder のメモをまとめていきます  
+自分用のメモなので, 説明が不足していることがあります
 
-自分用のメモなので, 説明が不足していることがあります.
 
-始めたばかりなので, まだまだ勉強中です.
+基本的に, TypeScript と Go で書いています
 
-基本的に, TypeScript と Go で書いています.
+import { useData } from "nextra/data";
+import { getRating } from "../api/rating";
+
+export const getStaticProps = async ({ params }) => {
+    const data = await getRating();
+  return { props: { ssg: data }, revalidate: 60 * 60 * 24 * 3 };
+};
+
+export const Rating = () => {
+    const { rating, colorCode } = useData();
+  return <strong style={{ color: colorCode }}>{rating}</strong>;
+};
+
+export const HighestRating = () => {
+    const { highestRating, highestColorCode } = useData();
+  return <strong style={{ color: highestColorCode }}>{highestRating}</strong>;
+};
+
+現在のレートは以下の通りです
+
+Rating: <Rating />  
+Rating最高値: <HighestRating />
+
+まだまだ始めたばかりですが, これから頑張っていきます
 
 [AtCoder](https://atcoder.jp/users/hamao)
 
