@@ -1,4 +1,9 @@
 {
+  "memo": {
+    "title": "Home",
+    "type": "page",
+    "href": "./"
+  },
   "tags": {
     "title": "タグ一覧",
     "type": "page"
