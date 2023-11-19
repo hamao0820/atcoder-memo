@@ -1,4 +1,8 @@
 {
+  "tags": {
+    "title": "タグ一覧",
+    "type": "page"
+  },
   "contact": {
     "title": "Contact ↗",
     "type": "page",
