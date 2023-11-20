@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "tags": "bun tags/generateMd.ts > pages/tags.md"
   },
   "repository": {
     "type": "git",
