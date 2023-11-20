@@ -1,7 +1,7 @@
 {
-  "name": "nextra-docs-template",
+  "name": "atcoder-memo",
   "version": "0.0.1",
-  "description": "Nextra docs template",
+  "description": "atcoder memo with nextra",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+    "url": "git+https://github.com/hamao0820/atcoder-memo"
   },
-  "author": "Shu Ding <g@shud.in>",
+  "author": "hamao",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shuding/nextra-docs-template/issues"
+    "url": "https://github.com/hamao0820/atcoder-memo/issues"
   },
-  "homepage": "https://github.com/shuding/nextra-docs-template#readme",
+  "homepage": "https://github.com/hamao0820/atcoder-memo#readme",
   "dependencies": {
     "jsdom": "^22.1.0",
     "next": "^13.0.6",
