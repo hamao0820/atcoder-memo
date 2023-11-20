@@ -2,7 +2,7 @@
 title: UnionFind
 tags:
   - UnionFind
-  - Disjoint Set Union
+  - DisjointSetUnion
 ---
 
 # UnionFind
@@ -10,7 +10,7 @@ tags:
 ## キーワード
 
 - UnionFind
-- Disjoint Set Union
+- DisjointSetUnion
 
 ## 概要
 
