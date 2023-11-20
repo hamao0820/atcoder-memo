@@ -7,11 +7,29 @@ type Props = {
 
 const Tags: FC<Props> = ({ tags }) => {
   return (
-    <div>
+    <>
       {tags.map((tag, i) => (
-        <div key={i}>{tag.name}</div>
+        <>
+          <h2
+            key={crypto.randomUUID()}
+            id={tag.name}
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              lineHeight: 1.333,
+              height: 48,
+            }}
+          >
+            {tag.name}
+          </h2>
+          <ul style={{ display: "flex" }}>
+            {tag.pages.map((page) => (
+              <li key={crypto.randomUUID()}>･ {page.title}</li>
+            ))}
+          </ul>
+        </>
       ))}
-    </div>
+    </>
   );
 };
 

@@ -3,9 +3,14 @@ import { glob } from "glob";
 import fs from "fs";
 // import os from "os";
 
+type Page = {
+  title: string;
+  path: string;
+};
+
 export type Tag = {
   name: string;
-  pages: string[];
+  pages: Page[];
 };
 
 export const getGlob = () => {
@@ -18,7 +23,9 @@ export const getTags = (): Tag[] => {
   const mdFiles = getGlob();
   mdFiles.forEach((f) => {
     const file = fs.readFileSync(f, "utf8");
-    const { metadata } = parseMD(file) as { metadata: { tags: string[] } };
+    const { metadata } = parseMD(file) as {
+      metadata: { tags: string[]; title: string };
+    };
     if (metadata.tags) {
       const filepath = f.split("pages/")[1];
       let filename: string;
@@ -28,10 +35,11 @@ export const getTags = (): Tag[] => {
         filename = filepath.slice(0, -4);
       }
       for (const tag of metadata.tags) {
+        const page = { title: metadata.title ?? filename, path: filename };
         if (tags.has(tag)) {
-          tags.get(tag)?.pages.push(filename);
+          tags.get(tag)?.pages.push(page);
         } else {
-          tags.set(tag, { name: tag, pages: [filename] });
+          tags.set(tag, { name: tag, pages: [page] });
         }
       }
     }
