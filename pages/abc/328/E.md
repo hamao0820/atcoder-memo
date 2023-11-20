@@ -2,8 +2,7 @@
 title: E - Modulo MST
 tags:
   - UnionFind
-  - combinations
-  - 組み合わせ
+  - Combination
 ---
 
 # E - Modulo MST
@@ -11,8 +10,7 @@ tags:
 ## キーワード
 
 - UnionFind
-- combinations
-- 組み合わせ
+- Combination
 
 ## 解説
 

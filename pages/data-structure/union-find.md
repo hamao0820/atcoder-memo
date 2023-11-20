@@ -1,22 +1,16 @@
 ---
 title: UnionFind
 tags:
-  - union find
   - UnionFind
-  - UF
   - Disjoint Set Union
-  - DSU
 ---
 
 # UnionFind
 
 ## キーワード
 
-- union find
 - UnionFind
-- UF
 - Disjoint Set Union
-- DSU
 
 ## 概要
 

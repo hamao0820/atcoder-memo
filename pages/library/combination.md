@@ -2,7 +2,7 @@
 title: Combination
 tags:
   - Combination
-  - 組み合わせ
+
 ---
 
 # Combination
@@ -10,7 +10,6 @@ tags:
 ## キーワード
 
 - Combination
-- 組み合わせ
 
 ## 概要
 

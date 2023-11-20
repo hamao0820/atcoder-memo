@@ -2,6 +2,7 @@
 title: D - Redistribution
 tags:
   - 動的計画法
+  - DP
 ---
 
 # ABC178 D - Redistribution
@@ -9,6 +10,7 @@ tags:
 ## キーワード
 
 - 動的計画法
+- DP
 
 ## 解説
 

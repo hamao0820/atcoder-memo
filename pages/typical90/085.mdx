@@ -8,6 +8,8 @@ tags:
 
 ## キーワード
 
+- 約数
+
 ## 解説
 
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_cg)
@@ -22,9 +24,7 @@ $1 \le K \le 10^{12}$
 
 import { Callout } from "nextra/components";
 
-<Callout emoji="💡">
-枝刈り全探索でも可能
-</Callout>
+<Callout emoji="💡">枝刈り全探索でも可能</Callout>
 
 $a \le b \le c \le K$ という条件から, 少なくとも $a \le \sqrt[3]{x}$ が言える.  
 $a^3 \ge K$ あるいは $ab^2 \ge K$ となった時点で打ち切る.  

@@ -2,7 +2,6 @@
 title: D - Take ABC
 tags:
   - stack
-  - スタック
 ---
 
 # D - Take ABC
@@ -10,7 +9,6 @@ tags:
 ## キーワード
 
 - stack
-- スタック
 
 ## 解説
 

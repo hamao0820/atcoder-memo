@@ -2,6 +2,7 @@
 title: D - Maze Master
 tags:
   - 幅優先探索
+  - BFS
 ---
 
 # ABC151 D - Maze Master
@@ -9,6 +10,7 @@ tags:
 ## キーワード
 
 - 幅優先探索
+- BFS
 
 ## 解説
 

@@ -2,7 +2,6 @@
 title: D - Prefix K-th Max
 tags:
   - heap
-  - TLE
 ---
 
 # ABC234 D - Prefix K-th Max
@@ -10,8 +9,6 @@ tags:
 ## キーワード
 
 - heap
-- TLE
-
 ## 解説
 
 [問題](https://atcoder.jp/contests/abc234/tasks/abc234_d)

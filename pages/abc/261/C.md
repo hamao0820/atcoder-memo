@@ -1,14 +1,9 @@
 ---
 title: C - NewFolder(1)
 tags:
-  - map
 ---
 
 # ABC261 C - NewFolder(1)
-
-## キーワード
-
-- map
 
 ## 解説
 
