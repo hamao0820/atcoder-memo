@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "tags": "bun tags/generateMd.ts > pages/tags.md",
+    "tags": "bun tags/generateMd.ts > pages/tags.mdx",
     "prepare": "husky install"
   },
   "repository": {
