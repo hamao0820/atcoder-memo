@@ -6,14 +6,12 @@ AtCoder のメモをまとめていきます
 基本的に, TypeScript と Go で書いています
 
 import { useData } from "nextra/data";
-import { getRating } from "../api/rating";
-import { getTags } from "../util/getTags";
+import { getRating } from "api/rating";
 
 export const getStaticProps = async ({ params }) => {
   const data = await getRating();
-  const tags = await getTags();
   return {
-    props: { ssg: { ...data, tags } },
+    props: { ssg: { ...data } },
     revalidate: 60 * 60 * 24 * 3,
   };
 };
@@ -28,17 +26,10 @@ export const HighestRating = () => {
   return <strong style={{ color: highestColorCode }}>{highestRating}</strong>;
 };
 
-export const Tags = () => {
-  const { tags } = useData();
-  return <>{JSON.stringify(tags)}</>;
-};
-
 現在のレートは以下の通りです
 
 Rating: <Rating />  
-Rating 最高値: <HighestRating />
-
-<Tags />
+Rating最高値: <HighestRating />
 
 まだまだ始めたばかりですが, これから頑張っていきます
 

@@ -3,7 +3,7 @@ import { glob } from "glob";
 import fs from "fs";
 // import os from "os";
 
-type Tag = {
+export type Tag = {
   name: string;
   pages: string[];
 };
