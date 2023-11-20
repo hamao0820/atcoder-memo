@@ -7,7 +7,7 @@ const withNextra = require("nextra")({
 module.exports = withNextra({
   webpack: (config) => {
     config.module.rules?.push({
-      test: /util\//,
+      test: /tags\//,
       loader: "ignore-loader",
     });
   },
