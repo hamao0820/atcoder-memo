@@ -8,14 +8,14 @@ type Tag = {
   pages: string[];
 };
 
-export const getGlob = async () => {
-  const mdFiles = glob.sync(__dirname + "/../../../pages/**/*.md");
+export const getGlob = () => {
+  const mdFiles = glob.sync(["pages/**/*.md", "pages/**/*.mdx"]);
   return mdFiles;
 };
 
 export const getTags = (): Tag[] => {
   const tags = new Map<string, Tag>();
-  const mdFiles = glob.sync(__dirname + "/../../../pages/**/*.md");
+  const mdFiles = getGlob();
   mdFiles.forEach((f) => {
     const file = fs.readFileSync(f, "utf8");
     const { metadata } = parseMD(file) as { metadata: { tags: string[] } };
