@@ -1,13 +1,4 @@
 {
-  "memo": {
-    "title": "Home",
-    "type": "page",
-    "href": "./"
-  },
-  "tags": {
-    "title": "タグ一覧",
-    "type": "page"
-  },
   "contact": {
     "title": "Contact ↗",
     "type": "page",
@@ -27,6 +18,7 @@
     "title": "Library"
   },
   "library": "ライブラリ",
+  "tags": "タグ一覧",
   "-- contests": {
     "type": "separator",
     "title": "Contests"
