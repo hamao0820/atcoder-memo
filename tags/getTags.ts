@@ -1,7 +1,6 @@
 import parseMD from "parse-md";
 import { glob } from "glob";
 import fs from "fs";
-// import os from "os";
 
 type Page = {
   title: string;
@@ -14,7 +13,10 @@ export type Tag = {
 };
 
 export const getGlob = () => {
-  const mdFiles = glob.sync(["pages/**/*.md", "pages/**/*.mdx"]);
+  const mdFiles = glob.sync([
+    __dirname + "/../pages/**/*.md",
+    __dirname + "/../pages/**/*.mdx",
+  ]);
   return mdFiles;
 };
 
