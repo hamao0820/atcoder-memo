@@ -27,7 +27,7 @@
 - [D - Redistribution](/abc/178/D)
 - [C - chokudai](/abc/211/C)
 
-## Disjoint Set Union
+## DisjointSetUnion
 
 - [012 - Red Painting（★4）](/typical90/012)
 - [UnionFind](/data-structure/union-find)
