@@ -1,0 +1,47 @@
+---
+title: B04 - Binary Representation 2
+tags:
+  - binary
+---
+
+# B04 - Binary Representation 2
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag={"binary"} />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_cc)
+
+[A03](/tessoku/A03)と同様、`fmt.Scanf`を使って 2 進数を`int`型で受け取れば良い。
+
+文字列として受け取り、一桁ずつ愚直に計算する方法もある。
+
+## 提出コード
+
+```go
+func main() {
+	var a int
+    fmt.Scanf("%b", &a)
+	writeFormat(a)
+}
+```
+
+```go
+func main() {
+	b := readString()
+	n := len(b)
+
+	a := 0
+	for i := 0; i < n; i++ {
+		if b[i] == '1' {
+			a += 1 << (n - i - 1)
+		}
+	}
+
+	writeLine(a)
+}
+```

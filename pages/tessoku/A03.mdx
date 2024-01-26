@@ -1,0 +1,43 @@
+---
+title: A04 - Binary Representation 1
+tags:
+  - binary
+---
+
+# A04 - Binary Representation 1
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag={"binary"} />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_d)
+
+今回は、`fmt.Printf`を使って、10 進数を 2 進数に変換して出力するだけで解ける。10 桁で出力するために、`%010b`というフォーマットを使う。
+
+$i$ bit 目の値を求めるには、`n`を $2^i$で割ったものを $2$ で割った余りを求めれば良い。$2^i$ を求めるには、`1 << i`を使う。  
+10 桁目から順に求めるためには、`i`を 9 から 0 まで減らしていけば良い。余った bit は自動的に 0 になる。
+
+## 提出コード
+
+```go
+func main() {
+	n := readInt()
+	writeFormat("%010b\n",n)
+}
+```
+
+```go
+func main() {
+	n := readInt()
+
+	for x := 9; x >= 0; x-- {
+		wari := 1 << x
+		write(n / wari % 2)
+	}
+	writeLine()
+}
+```
