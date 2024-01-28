@@ -1,0 +1,40 @@
+---
+title: A - 25個の文字列
+tags:
+  - 辞書順
+---
+
+# A - 25 個の文字列
+
+## キーワード
+
+import Tag from "components/tags";
+
+- <Tag tag={"辞書順"} />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc025/tasks/abc025_a)
+
+`s` から 2 文字を並べてできるものを辞書順でソートするだけ。
+golang であれば、`<`演算子で文字列の大小を比較できるので、`sort.Slice`を使うと簡単に実装できる。
+
+## 提出コード
+
+```go
+func main() {
+	s := readString()
+	n := readInt()
+
+	dict := make([]string, len(s)*len(s))
+	for i := 0; i < len(s); i++ {
+		for j := 0; j < len(s); j++ {
+			dict[i*len(s)+j] = string(s[i]) + string(s[j])
+		}
+	}
+	sort.Slice(dict, func(i, j int) bool {
+		return dict[i] < dict[j]
+	})
+	writeLine(dict[n-1])
+}
+```
