@@ -1,0 +1,68 @@
+---
+title: E - Chords
+tags:
+  - 弦
+  - 円環
+---
+
+# E - Chords
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="弦" />
+- <Tag tag="円環" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc338/tasks/abc338_e)
+
+円環を直線に変換して考えると、$A_i$ から $B_i$ への曲線が交差しているかどうかを判定する問題になる。
+
+$A_i$ から $B_i$ への曲線が交差しているかどうかは、$A_i < A_j < B_i < B_j$ なる $i,j (i \neq j) $ が存在するかどうかと同値である。
+
+そのような $i, j$ が存在するかどうかは、スタックを用いて判定できる。
+
+1. 空のスタックを用意する
+2. $j = 1,2,\cdots ,N$ に対して、
+   - $A_i = j$ なる $i$ が存在する場合、スタックに $i$ を追加する
+   - $B_i = j$ なる $i$ が存在する場合、スタックから要素を取り出す。取り出した要素が $i$ と異なる場合、$i, j$ が条件を満たすので終了する。
+3. 最後まで終了することがなければ、交差は存在しないため、終了する。
+
+## 提出コード
+
+```go
+func main() {
+	n := readInt()
+	stack := stack.New[int]()
+
+	pair := make([][2]int, 2*n)
+	for i := 0; i < n; i++ {
+		var a, b int
+		scanIntVariables(&a, &b)
+		a--
+		b--
+		if a > b {
+			a, b = b, a
+		}
+		pair[a] = [2]int{0, i}
+		pair[b] = [2]int{1, i}
+	}
+
+	for i := 0; i < 2*n; i++ {
+		t, id := pair[i][0], pair[i][1]
+		if t == 0 {
+			stack.Push(id)
+		} else {
+			if stack.Top() != id {
+				writeLine("Yes")
+				return
+			}
+			stack.Pop()
+		}
+	}
+
+	writeLine("No")
+}
+```
