@@ -1,0 +1,70 @@
+---
+title: 二分探索法
+tags:
+  - 二分探索法
+---
+
+# 二分探索法
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="二分探索法" />
+
+## 概要
+
+ソート済み配列から特定の値を探索するアルゴリズム.
+
+## 計算量
+
+$\mathrm{O}(\log{N})$
+
+## 実装
+
+```go
+func binarySearch(A []int, key int) int {
+	l := 0
+	r := len(A) - 1
+	for l <= r {
+		c := (l + r) / 2
+		if A[c] == key {
+			return c
+		}
+
+		if A[c] < key {
+			l = c + 1
+		} else {
+			r = c - 1
+		}
+	}
+	return -1
+}
+```
+
+調べる範囲を半分に絞っていくので、計算量は $\mathrm{O}(\log{N})$ となる。
+
+`l <= r`を`l < r`にすると、正しく動作しないので注意。
+
+A の中で`key`未満の個数(= `key`未満で最大の値のインデックス)を求める場合は、以下のようにすれば良い。
+
+```go
+func lowerBound(arr []int, key int) int {
+	l := 0
+	r := len(arr)
+	for l < r {
+		m := (l + r) / 2
+		if arr[m] < key {
+			l = m + 1
+		} else {
+			r = m
+		}
+	}
+	return l
+}
+```
+
+## 例題
+
+- [鉄則本| A11 - Binary Search 1](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_k)
+- [鉄則本| B11 - Binary Search 2](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_cj)
