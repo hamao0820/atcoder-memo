@@ -1,0 +1,62 @@
+---
+title: C - Divide and Divide
+tags:
+  - メモ化再帰
+---
+
+# C - Divide and Divide
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="メモ化再帰" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc340/tasks/abc340_c)
+
+再帰的に数値を半分に分割していく問題のため、次のような再帰関数を考える。
+
+$$
+f(n) = \
+\begin{cases}
+  0 & (n = 1) \\
+  f(\lfloor\frac{n}{2}\rfloor) + f(\lceil\frac{n}{2}\rceil) + n & (n \neq 1) \\
+\end{cases}
+$$
+
+と置くと、答えは $f(N)$ となる。
+
+一度計算した値をメモ化しておくことで、計算量を削減できる。
+
+計算量は $O(\log N)$ となる。
+
+※ どんな数も最終的に $1$ になる。そのため、$1$ から順に計算していくことで、最終的な答えを求めることができるが、今回は入力が $2 \leq N \leq 10^{17}$ と大きいため、そのまま計算することはできない。
+
+## 提出コード
+
+```go
+func main() {
+	n := readInt()
+	m := make(map[int]int)
+	var f func(int) int
+	f = func(x int) int {
+		if x == 1 {
+			return 0
+		}
+		if v, ok := m[x]; ok {
+			return v
+		}
+
+		a := x / 2
+		b := (x + 1) / 2
+
+		m[x] = f(a) + f(b) + x
+		return m[x]
+	}
+
+	ans := f(n)
+	writeLine(ans)
+}
+```
