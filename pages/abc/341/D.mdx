@@ -1,0 +1,51 @@
+---
+title: D - Only one of two
+tags:
+  - 二分探索
+---
+
+# D - Only one of two
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="二分探索" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc341/tasks/abc341_d)
+
+$N$ と $M$ の最小公倍数を $L$ とする。
+
+ある数 $X$ が与えられた時、$X$ 以下の数のうち、$N$ で割り切れる数の個数は $\lfloor X/N \rfloor$ 個、$M$ で割り切れる数の個数は $\lfloor X/M \rfloor$ 個、$N$ と $M$ の両方で割り切れる数の個数は $\lfloor X/L \rfloor$ 個である。
+
+よって、$X$ 以下の数のうち、$N$ または $M$ のどちらか一方で割り切れる数の個数は $k = \lfloor X/N \rfloor + \lfloor X/M \rfloor - \lfloor X/L \rfloor \times 2$ 個である。
+
+つまり、$X$ が 条件をみたす数の時、$X$ は 小さい順に $k$ 番目の数であることを意味する。
+
+$k = K$ となる $X$ を求めればよく、これは二分探索で求めることができる。
+
+## 提出コード
+
+```go
+func main() {
+	var n, m, k int
+	scanIntVariables(&n, &m, &k)
+	l := lcm(n, m)
+	check := func(x int) bool {
+		return x/m+x/n-x/l*2 < k
+	}
+	left := 0
+	right := math.MaxInt64
+	for right-left > 1 {
+		mid := (left + right) / 2
+		if check(mid) {
+			left = mid
+		} else {
+			right = mid
+		}
+	}
+	writeLine(left + 1)
+}
+```

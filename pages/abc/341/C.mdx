@@ -1,0 +1,71 @@
+---
+title: C - Takahashi Gets Lost
+tags:
+  - 全探索
+---
+
+# C - Takahashi Gets Lost
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="全探索" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc341/tasks/abc341_c)
+
+全探索するだけ。計算量は $\mathrm{O}(500^3) = \mathrm{O}(10^8)$ 。
+
+判定は、移動後の座標が盤面外でなく、移動後の座標が陸であることを確認する。
+
+## 提出コード
+
+```go
+func main() {
+	var h, w, n int
+	scanIntVariables(&h, &w, &n)
+	t := readString()
+	G := make([][]bool, h)
+	for i := 0; i < h; i++ {
+		G[i] = make([]bool, w)
+	}
+	for i := 0; i < h; i++ {
+		s := readString()
+		for j := 0; j < w; j++ {
+			if s[j] == '.' {
+				G[i][j] = true
+			}
+		}
+	}
+	ans := 0
+	for sy := 0; sy < h; sy++ {
+		for sx := 0; sx < w; sx++ {
+			cx := sx
+			cy := sy
+			for i := 0; i < n; i++ {
+				if cx < 0 || cx >= w || cy < 0 || cy >= h || !G[cy][cx] {
+					break
+				}
+				if t[i] == 'L' {
+					cx--
+				} else if t[i] == 'R' {
+					cx++
+				} else if t[i] == 'U' {
+					cy--
+				} else if t[i] == 'D' {
+					cy++
+				}
+				if i == n-1 {
+					if cx < 0 || cx >= w || cy < 0 || cy >= h || !G[cy][cx] {
+						continue
+					}
+					ans++
+				}
+			}
+		}
+	}
+	writeLine(ans)
+}
+```
