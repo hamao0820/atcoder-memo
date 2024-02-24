@@ -1,0 +1,110 @@
+---
+title: SegmentTree
+tags:
+  - セグ木
+  - モノイド
+---
+
+# SegmentTree
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="セグ木" />
+- <Tag tag="モノイド" />
+
+## 概要
+
+セグメント木 (Segment Tree) は, 一次元の区間に対するクエリを効率的に処理するためのデータ構造である.
+
+モノイドの性質を持つ演算を行うことができる.
+
+モノイドとは、集合 $M$ とその上の二項演算 $\cdot$ が以下の条件を満たすときに呼ばれる.
+
+1. 結合法則: 任意の $a, b, c \in M$ に対して, $a \cdot (b \cdot c) = (a \cdot b) \cdot c$ が成り立つ.
+2. 単位元の存在: ある $e \in M$ が存在して, 任意の $a \in M$ に対して, $e \cdot a = a \cdot e = a$ が成り立つ.
+
+## 構造
+
+```go
+type UnionFind struct {
+    n    int
+    root []int
+}
+```
+
+## 操作
+
+| 操作   | 引数       | 返り値                                      |
+| ------ | ---------- | ------------------------------------------- |
+| Update | idx, x     | idx 番目の要素を x に更新する               |
+| Query  | begin, end | [begin, end) の区間に対するクエリを実行する |
+
+グループの代表者を root で管理し, 代表者を根にもつ木を表現する.
+
+## 計算量
+
+| 操作   | 計算量(平均)          | 計算量                |
+| ------ | --------------------- | --------------------- |
+| Update | $\mathrm{O}(\log(n))$ | $\mathrm{O}(\log(n))$ |
+| Query  | $\mathrm{O}(\log(n))$ | $\mathrm{O}(\log(n))$ |
+
+## 実装
+
+```go
+type SegmentTree[T any] struct {
+	data []T
+	n    int
+	e    T
+	op   func(T, T) T
+}
+
+func NewSegmentTree[T any](n int, e T, op func(T, T) T) *SegmentTree[T] {
+	segtree := new(SegmentTree[T])
+	segtree.e = e
+	segtree.op = op
+	segtree.n = 1
+	for segtree.n < n {
+		segtree.n *= 2
+	}
+	segtree.data = make([]T, segtree.n*2-1)
+	for i := 0; i < segtree.n*2-1; i++ {
+		segtree.data[i] = segtree.e
+	}
+	return segtree
+}
+
+func (segtree *SegmentTree[T]) Update(idx int, x T) {
+	idx += segtree.n - 1
+	segtree.data[idx] = x
+	for 0 < idx {
+		idx = (idx - 1) / 2
+		segtree.data[idx] = segtree.op(segtree.data[idx*2+1], segtree.data[idx*2+2])
+	}
+}
+
+func (segtree *SegmentTree[T]) query(begin, end, idx, a, b int) T {
+	if b <= begin || end <= a {
+		return segtree.e
+	}
+	if begin <= a && b <= end {
+		return segtree.data[idx]
+	}
+	v1 := segtree.query(begin, end, idx*2+1, a, (a+b)/2)
+	v2 := segtree.query(begin, end, idx*2+2, (a+b)/2, b)
+	return segtree.op(v1, v2)
+}
+
+func (segtree *SegmentTree[T]) Query(begin, end int) T {
+	return segtree.query(begin, end, 0, 0, segtree.n)
+}
+```
+
+## 例題
+
+- [鉄則本 | A58 - RMQ (Range Maximum Queries) ](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bf)
+
+## 引用
+
+- https://zenn.dev/johniel/articles/f1028e37f91489
