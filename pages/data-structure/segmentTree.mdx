@@ -28,9 +28,11 @@ import Tag from "components/Tag";
 ## 構造
 
 ```go
-type UnionFind struct {
-    n    int
-    root []int
+type SegmentTree[T any] struct {
+	data []T
+	n    int
+	e    T
+	op   func(T, T) T
 }
 ```
 
