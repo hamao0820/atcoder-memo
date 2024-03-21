@@ -1,0 +1,106 @@
+---
+title: クラスカル法
+tags:
+  - MST
+  - 最小全域木
+  - UnionFind
+---
+
+# クラスカル法
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="MST" />
+- <Tag tag="最小全域木" />
+- <Tag tag="UnionFind" />
+
+## 概要
+
+連結無向グラフの最小全域木を求めるアルゴリズム。
+
+全ての辺をコストの小さい順にソートし、閉路が生じないように順に最小全域木を求める。
+
+閉路の判定は[UnionFind](/data-structure/union-find)を用いる。辺の両端点が同じ連結成分に属している時、閉路が生じる。
+
+## 計算量
+
+$\mathrm{O}(M\log{M})$
+
+uf での比較は $\mathrm{O}(1)$ とみてよく、ソートにかかる時間が全体の計算量となる。
+
+## 応用例
+
+## 実装
+
+```go
+func main() {
+	var n, m int
+	scanIntVariables(&n, &m)
+	E := make([][3]int, m)
+	for i := 0; i < m; i++ {
+		scanIntVariables(&E[i][0], &E[i][1], &E[i][2])
+	}
+	uf := newUnionFind(n+1)
+	sort.Slice(E, func(i, j int) bool {
+		return E[i][2] < E[j][2]
+	})
+	ans := 0
+	for _, e := range E {
+		if !uf.isSame(e[0], e[1]) {
+			uf.unite(e[0], e[1])
+			ans += e[2]
+		}
+	}
+	writeLine(ans)
+}
+
+type UnionFind struct {
+	n    int
+	root []int
+}
+
+func newUnionFind(n int) UnionFind {
+	root := make([]int, n)
+	for i := 0; i < n; i++ {
+		root[i] = -1
+	}
+	uf := UnionFind{n: n, root: root}
+	return uf
+}
+func (u *UnionFind) find(x int) int {
+	if u.root[x] < 0 {
+		return x
+	}
+	u.root[x] = u.find(u.root[x]) // 再帰で根に直接繋ぎ直す
+	return u.root[x]
+}
+func (u *UnionFind) unite(x, y int) {
+	x = u.find(x) // xを根に書き換え
+	y = u.find(y) // yを根に書き換え
+	if x == y {
+		return
+	}
+	if -u.root[x] < -u.root[y] {
+		x, y = y, x
+	} // xの集合の要素数の方が大きいようにスワップ
+	u.root[x] += u.root[y]
+	u.root[y] = x
+}
+func (u *UnionFind) isSame(x, y int) bool {
+	return u.find(x) == u.find(y)
+}
+func (u *UnionFind) size(x int) int {
+	return -u.root[u.find(x)]
+}
+```
+
+## 例題
+
+- [鉄則 | A67 - MST (Minimum Spanning Tree)](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bo)
+- [鉄則 | B67 - Max MST](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_en)
+
+## 参考
+
+[Algorithm | 最小全域木を Python3 で解説（例題あり）](https://qiita.com/uniTM/items/a6c5211ce9c9008b74a8)
