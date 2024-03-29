@@ -7,18 +7,14 @@
   },
   "index": "HOME",
   "environment": "実行環境",
+  "library": "ライブラリ",
+  "tags": "タグ一覧",
   "-- data structure and algorithm": {
     "type": "separator",
     "title": "DataStructure & Algorithm"
   },
   "data-structure": "データ構造",
   "algorithm": "アルゴリズム",
-  "-- library": {
-    "type": "separator",
-    "title": "Library"
-  },
-  "library": "ライブラリ",
-  "tags": "タグ一覧",
   "-- contests": {
     "type": "separator",
     "title": "Contests"
