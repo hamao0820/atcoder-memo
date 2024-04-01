@@ -1,0 +1,109 @@
+---
+title: フォードファルカーソン法
+tags:
+  - 最大流問題
+  - 最小カット
+---
+
+# フォードファルカーソン法
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="最大流問題" />
+- <Tag tag="最小カット" />
+
+## 概要
+
+有向グラフ $G$ と各辺の非負の容量 $u$ と始点 $s$ と終点 $t$ からなるネットワーク $[G;s,t,u]$ において、$s$ から $t$ への最大流を求めるアルゴリズム。
+
+増大路アルゴリズムとも呼ばれる。
+
+ネットワークとフロー $x$ に対して、残余ネットワーク $[G;x]$ を以下のように定義する。
+
+- 各辺 $(u,v)$ に対して、$x(u,v) < u(e)$ ならば、 $u$ から $v$ への容量 $u$ からフロー $x(u,v)$ を引いた値を容量とする辺 $(u,v)$ を追加する。
+- 各辺 $(v,u)$ に対して、$x(u,v) > 0$ ならば、フロー $x(u,v)$ を容量とする辺 $(v,u)$ を追加する。
+
+1. 全ての辺のフローを 0 に初期化する。
+1. フロー値 $F$ を 0 に初期化する。
+1. $s$ から $t$ へのパスが存在する限り、以下の操作を繰り返す。
+   1. 残余ネットワークにおいて、$s$ から $t$ への最短パスを見つける。
+   1. その最短パスにおける最小容量 $\Delta$を求める。
+   1. その最短パスにおける各辺 $(u,v)$ に対して、$x(u,v) \leftarrow x(u,v) + \Delta$ または $x(v,u) \leftarrow x(v,u) - \Delta$ とする。
+   1. フロー値 $F \leftarrow F + \Delta$ とする。
+
+最短パスの探索には深さ優先探索を用いることが多い。
+
+## 計算量
+
+辺の数を $E$ 、最大流を $F$ とすると、計算量は $\mathrm{O}(F \cdot E)$ である。
+
+## 応用例
+
+- 2 部マッチング
+- 最小カット
+- 最小費用流
+- 配送の最適化
+- 通信ネットワークの最適化
+
+## 実装
+
+```go
+type Edge struct {
+	to, cap, rev int // to: 行き先, cap: 容量, rev: 逆辺のインデックス
+}
+
+func main() {
+	var n, m int
+	scanIntVariables(&n, &m)
+	G := make([][]Edge, n+1) // 残余グラフ
+	for i := 0; i < m; i++ {
+		var a, b, c int
+		scanIntVariables(&a, &b, &c)
+		G[a] = append(G[a], Edge{b, c, len(G[b])})
+		G[b] = append(G[b], Edge{a, 0, len(G[a]) - 1})
+	}
+	visited := make([]bool, n+1)
+	var dfs func(v, t, d int) int
+	dfs = func(v, t, f int) int {
+		if v == t {
+			return f
+		}
+		visited[v] = true
+		for i := 0; i < len(G[v]); i++ {
+			if G[v][i].cap == 0 {
+				continue
+			}
+			if visited[G[v][i].to] {
+				continue
+			}
+			del := dfs(G[v][i].to, t, min(f, G[v][i].cap)) // パスの最小容量
+			if del > 0 {
+				G[v][i].cap -= del
+				G[G[v][i].to][G[v][i].rev].cap += del
+				return del
+			}
+		}
+		return 0
+	}
+
+	ans := 0
+	for { // 増加路がなくなるまで繰り返す
+		visited = make([]bool, n+1)
+		d := dfs(1, n, math.MaxInt32)
+		if d == 0 {
+			break
+		}
+		ans += d
+	}
+	writeLine(ans)
+}
+```
+
+## 例題
+
+- [鉄則本 | A68 - Maximum Flow](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bp)
+- [鉄則本 | B68 - ALGO Express](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_eo)
+
+## 引用
