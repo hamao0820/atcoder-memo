@@ -1,0 +1,113 @@
+---
+title: エドモンズカープ法
+tags:
+  - 最大流
+  - 最小カット
+---
+
+# エドモンズカープ法
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="最大流" />
+- <Tag tag="最小カット" />
+
+## 概要
+
+最大流を求めるアルゴリズムの一つ。フォードファルカーソン法と同じく、残余グラフを用いて最大流を求める。
+
+ほとんど、[フォードファルカーソン法](./ford_fulkerson.mdx)と同様。
+
+異なる点は、増加パスとして、最短のものを選ぶことで、計算量を改善している。
+
+[フォードファルカーソン法](./ford_fulkerson.mdx)の場合、流量が 1 ずつしか増加しない場合、最悪計算量が$O(FE)$となるが、エドモンズカープ法の場合、$O(VE^2)$となる。
+
+最短路を求めるために、幅優先探索を用いる。
+
+## 計算量
+
+$O(NM^2)$
+
+反復が　$\mathrm{O}(\lfloor \frac{NM}{2} \rfloor)$ 回で終了することが知られている。
+
+## 応用例
+
+## 実装
+
+グラフ自体は有向グラフであるが、BFS を行う際に、逆辺も考慮するため、隣接リストに逆辺も追加する。
+
+```go
+func main() {
+	var n, m int
+	scanIntVariables(&n, &m)
+	G := make([][]int, n+1) // 隣接リスト
+	C := make([][]int, n+1) // 容量
+	F := make([][]int, n+1) // フロー
+	for i := 0; i <= n; i++ {
+		C[i] = make([]int, n+1)
+		F[i] = make([]int, n+1)
+	}
+	for i := 0; i < m; i++ {
+		var a, b, c int
+		scanIntVariables(&a, &b, &c)
+		G[a] = append(G[a], b) // 辺(a,b)を追加
+		G[b] = append(G[b], a) // 逆辺(b,a)を追加
+		C[a][b] = c            // 辺(a,b)の容量はc
+	}
+	s := 1 // 始点
+	t := n // 終点
+	bfs := func() (int, []int) {
+		P := make([]int, n+1) // パス (P[v] = u ならば u->v がパスに含まれる)
+		for i := 0; i <= n; i++ {
+			P[i] = -1 // 未訪問
+		}
+		P[s] = -2
+		D := make([]int, n+1) // s から v までの残余容量の最小値
+		D[s] = math.MaxInt64
+		que := queue.New[int]()
+		que.Push(s)
+		for !que.Empty() {
+			u := que.Pop()
+			for _, v := range G[u] {
+				if C[u][v]-F[u][v] > 0 && P[v] == -1 {
+					P[v] = u
+					D[v] = min(D[u], C[u][v]-F[u][v])
+					if v != t {
+						que.Push(v)
+					} else {
+						return D[t], P
+					}
+				}
+			}
+		}
+		return 0, P
+	}
+	ans := 0
+	for {
+		d, P := bfs()
+		if d == 0 {
+			break
+		}
+		ans += d
+		v := t
+		for v != s {
+			u := P[v]
+			F[u][v] += d
+			F[v][u] -= d
+			v = u
+		}
+	}
+	writeLine(ans)
+}
+```
+
+## 例題
+
+- [鉄則本 | A68 - Maximum Flow](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bp)
+- [鉄則本 | B68 - ALGO Express](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_eo)
+
+## 引用
+
+[エドモンズ・カープのアルゴリズム](https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%89%E3%83%A2%E3%83%B3%E3%82%BA%E3%83%BB%E3%82%AB%E3%83%BC%E3%83%97%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)
