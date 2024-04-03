@@ -1,0 +1,124 @@
+---
+title: ディニッツ法
+tags:
+  - 最大流問題
+  - 最小カット
+---
+
+# ディニッツ法
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="最大流問題" />
+- <Tag tag="最小カット" />
+
+## 概要
+
+最大流問題のアルゴリズムの一つ。
+
+[フォードファルカーソン法](./ford_fulkerson.mdx)や[エドモンズカープ法](./edmonds_karp.mdx)よりも高速である。
+
+[エドモンズカープ法](./edmonds_karp.mdx)と同様に、最短のパスを探索することで、最大流を求める。
+
+[エドモンズカープ法](./edmonds_karp.mdx)は、毎回最短のパスを探索するが、ディニッツ法では、一度レベルネットワーク($s-t$ 最短路 DAG)を構築し、その上で最短のパスを探索したのち、ブロックフローをまとめて更新するという手法を取る。
+
+## 計算量
+
+$\mathrm{O}(N^2M)$ だが、実際にはもっと早い。
+
+最短経路 DAG 上の DFS は、順番に辿ると長さ $N-1$ 以下の最短パスが得られるため $\mathrm{O}(N)$ で、一度増加路を通ると、少なくとも一本の辺が飽和するので、DFS が $\mathrm{O}(M)$ 回呼ばれる。
+
+最短経路長は、ブロックフローを更新するたびに、少なくとも $1$ 増加し、最大で $N-1$ まで増加するため、BFS が $\mathrm{O}(N)$ 回呼ばれる。
+
+したがって、全体の計算量は $\mathrm{O}(N^2M)$ となる。
+
+## 応用例
+
+## 実装
+
+```go
+type Edge struct {
+	to, cap, rev int
+}
+
+func main() {
+	var n, m int
+	scanIntVariables(&n, &m)
+	G := make([][]*Edge, n+1)
+	L := make([]int, n+1)
+	C := make([]int, n+1)
+	for i := 0; i < m; i++ {
+		var a, b, c int
+		scanIntVariables(&a, &b, &c)
+		G[a] = append(G[a], &Edge{b, c, len(G[b])})
+		G[b] = append(G[b], &Edge{a, 0, len(G[a]) - 1})
+	}
+	s := 1
+	t := n
+	bfs := func() {
+		for i := 0; i <= n; i++ {
+			L[i] = -1
+		}
+		que := queue.New[int]()
+		que.Push(s)
+		L[s] = 0
+		for !que.Empty() {
+			v := que.Pop()
+			for _, e := range G[v] {
+				if e.cap > 0 && L[e.to] == -1 {
+					L[e.to] = L[v] + 1
+					que.Push(e.to)
+				}
+			}
+		}
+	}
+	var dfs func(v, f int) int
+	dfs = func(v, f int) int {
+		if v == t {
+			return f
+		}
+		for _, e := range G[v] {
+			if e.cap > 0 && L[v] < L[e.to] {
+				d := dfs(e.to, min(f, e.cap))
+				if d > 0 {
+					e.cap -= d
+					G[e.to][e.rev].cap += d
+					return d
+				}
+			}
+		}
+		return 0
+	}
+	ans := 0
+	for {
+		bfs()
+		if L[t] == -1 {
+			break
+		}
+		for {
+			for i := 0; i <= n; i++ {
+				C[i] = 0
+			}
+			f := dfs(s, 1<<60)
+			if f == 0 {
+				break
+			}
+			ans += f
+		}
+	}
+	writeLine(ans)
+}
+```
+
+## 例題
+
+- [鉄則本 | A68 - Maximum Flow](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bp)
+- [鉄則本 | B68 - ALGO Express](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_eo)
+
+## 引用
+
+[Dinic 法とその時間計算量](https://misawa.github.io/others/flow/dinic_time_complexity.html)
+
+[【C++】Dinic 法の実装](https://qiita.com/0xkei10/items/807ff3c78857fd3017b1)
