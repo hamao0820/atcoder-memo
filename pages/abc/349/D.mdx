@@ -1,0 +1,82 @@
+---
+title: D - Divide Interval
+tags:
+  - セグ木
+---
+
+# D - Divide Interval
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="セグ木" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc349/tasks/abc349_d)
+
+貪欲に解いてく。$2^i(j+1)$ が $R$ を超えない範囲で $l = 2^ij$ となる最大の $i$ を求めて、その範囲を追加していく。
+
+計算量はよくわからない。
+
+セグ木の実装の分割と同じなので、セグ木の実装ができる人は余裕なのかも。
+
+## 提出コード
+
+```go
+func main() {
+	var l, r int
+	scanIntVariables(&l, &r)
+	Ans := [][2]int{}
+	for {
+		beki := 2 << 60
+		for {
+			if l%beki == 0 && beki*(l/beki+1) <= r {
+				Ans = append(Ans, [2]int{l, l + beki})
+				break
+			}
+			beki /= 2
+		}
+		l = l + beki
+		if l >= r {
+			break
+		}
+	}
+
+	fmt.Println(len(Ans))
+	for _, v := range Ans {
+		fmt.Println(v[0], v[1])
+	}
+}
+```
+
+```go
+func main() {
+	var l, r int
+	scanIntVariables(&l, &r)
+	L := make([][2]int, 0)
+	R := make([][2]int, 0)
+	p := 0
+	for l < r {
+		if l%2 == 1 {
+			L = append(L, [2]int{l << p, (l + 1) << p})
+			l++
+		}
+		if r%2 == 1 {
+			r--
+			R = append(R, [2]int{r << p, (r + 1) << p})
+		}
+		l >>= 1
+		r >>= 1
+		p++
+	}
+	writeLine(len(L) + len(R))
+	for i := 0; i < len(L); i++ {
+		writeLine(L[i][0], L[i][1])
+	}
+	for i := len(R) - 1; i >= 0; i-- {
+		writeLine(R[i][0], R[i][1])
+	}
+}
+```
