@@ -112,6 +112,91 @@ func main() {
 }
 ```
 
+ライブラリ化したもの
+
+```go
+func NewMaximumFlow(size int) *MaximumFlow {
+	return &MaximumFlow{
+		graph:    make([][]*Edge, size+1),
+		level:    make([]int, size+1),
+		capacity: make([]int, size+1),
+		size:     size,
+	}
+}
+
+func (mf *MaximumFlow) AddEdge(from, to, cap int) {
+	mf.graph[from] = append(mf.graph[from], &Edge{to, cap, len(mf.graph[to])})
+	mf.graph[to] = append(mf.graph[to], &Edge{from, 0, len(mf.graph[from]) - 1})
+}
+
+func (mf *MaximumFlow) MaxFlow(s, t int) int {
+	bfs := func() {
+		for i := 0; i <= mf.size; i++ {
+			mf.level[i] = -1
+		}
+		que := queue.New[int]()
+		que.Push(s)
+		mf.level[s] = 0
+		for !que.Empty() {
+			v := que.Pop()
+			for _, e := range mf.graph[v] {
+				if e.cap > 0 && mf.level[e.to] == -1 {
+					mf.level[e.to] = mf.level[v] + 1
+					que.Push(e.to)
+				}
+			}
+		}
+	}
+	var dfs func(v, f int) int
+	dfs = func(v, f int) int {
+		if v == t {
+			return f
+		}
+		for _, e := range mf.graph[v] {
+			if e.cap > 0 && mf.level[v] < mf.level[e.to] {
+				d := dfs(e.to, min(f, e.cap))
+				if d > 0 {
+					e.cap -= d
+					mf.graph[e.to][e.rev].cap += d
+					return d
+				}
+			}
+		}
+		return 0
+	}
+	flow := 0
+	for {
+		bfs()
+		if mf.level[t] == -1 {
+			break
+		}
+		for {
+			for i := 0; i <= mf.size; i++ {
+				mf.capacity[i] = 0
+			}
+			f := dfs(s, 1<<60)
+			if f == 0 {
+				break
+			}
+			flow += f
+		}
+	}
+	return flow
+}
+
+func main() {
+	var n, m int
+	scanIntVariables(&n, &m)
+	mf := NewMaximumFlow(n + 1)
+	for i := 0; i < m; i++ {
+		var a, b, c int
+		scanIntVariables(&a, &b, &c)
+		mf.AddEdge(a, b, c)
+	}
+	writeLine(mf.MaxFlow(1, n))
+}
+```
+
 ## 例題
 
 - [鉄則本 | A68 - Maximum Flow](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bp)
