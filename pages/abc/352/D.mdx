@@ -1,0 +1,101 @@
+---
+title: D - Permutation Subsequence
+tags:
+  - セグ木
+  - 平衡二分探索木
+---
+
+# D - Permutation Subsequence
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="セグ木" />
+- <Tag tag="平衡二分探索木" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc352/tasks/abc352_d)
+
+**良い添字列**は $(1,2, \dots, n)$ の連続する長さ $k$ の部分列に対して、それぞれの $P$ においてのインデックスを取り出したもの。
+
+全ての良い添字列に対して、その中で最大の値と最小の値の差の最小値を求める問題。つまり、全ての $(1,2, \dots, n)$ の連続する長さ $k$ の部分列に対して、P においてのインデックスで最大の値と最小の値の差の最小値を求めればよい。
+
+一つ目の方法として、セグ木を使う方法がある。
+
+二つのセグ木を用意して、それぞれのセグ木において、最大値と最小値を持っておく。これによって、全ての $(1,2, \dots, n)$ の連続する長さ $k$ の部分列に対して、最大値と最小値を求めることができる。
+
+それぞれのセグ木には、 $P_i$ 番目に $i$ を入れておく。それらに対して、 $j,j+1,\dots,j + k \quad j = 0,1,\dots,n-k$ の区間でクエリを行う。
+
+この場合、計算量は $O(n \log n)$ となる。
+
+二つ目の方法としては、平衡二分探索木を用いる方法がある。
+
+平衡二分探索木は、挿入、削除、クエリが $O(\log n)$ で行えるデータ構造である。普通の `Set`型より挿入、削除、クエリが遅くなるが、 最大値と最小値の取得が　$\mathrm{O}(1)$ で行える。
+
+$Q_{P_i} = i \quad i = 1,\dots,n$ とおいて、 $Q_i,Q_{i+1},\dots,Q_{i+k} \quad i = 1,\dots,n-k$ の区間に対して、最大値と最小値を取得すればよい。
+
+$i$ を $1$ ずつスライドさせ、そのたびに $Q_{i-1}$ を 削除し、 $Q_{i+k}$ を挿入することで、長さ $k$ の良い添字列の集合を作ることができる。
+
+これによって、全ての $(1,2, \dots, n)$ の連続する長さ $k$ の部分列に対して、最大値と最小値を求めることができる。
+
+こちらの場合も、計算量は $O(n \log n)$ となる。
+
+`Go` で実装する場合は、[`github.com/liyue201/gostl/ds/set`](https://pkg.go.dev/github.com/liyue201/gostl@v1.2.0/ds/set)を使えばよい。
+
+## 提出コード
+
+- セグ木を使った解法
+
+セグ木の実装は[こちら](../../data-structure/segmentTree)から。
+
+```go
+func main() {
+	var n, k int
+	scanIntVariables(&n, &k)
+	P := readInts()
+	maxT := NewSegmentTree(n, 0, func(a, b int) int {
+		return max(a, b)
+	})
+	minT := NewSegmentTree(n, math.MaxInt32, func(a, b int) int {
+		return min(a, b)
+	})
+	for i := 0; i < n; i++ {
+		maxT.Update(P[i]-1, i)
+		minT.Update(P[i]-1, i)
+	}
+	ans := math.MaxInt32
+	for i := 0; i < n-k+1; i++ {
+		maxP := maxT.Query(i, i+k)
+		minP := minT.Query(i, i+k)
+		ans = min(ans, maxP-minP)
+	}
+	writeLine(ans)
+}
+```
+
+- 平衡二分探索木を使った解法
+
+```go
+func main() {
+	var n, k int
+	scanIntVariables(&n, &k)
+	P := readInts()
+	Q := make([]int, n)
+	for i := 0; i < n; i++ {
+		Q[P[i]-1] = i
+	}
+	st := set.New(func(a, b int) int { return a - b })
+	for i := 0; i < k; i++ {
+		st.Insert(Q[i])
+	}
+	ans := st.Last().Value() - st.Begin().Value()
+	for i := k; i < n; i++ {
+		st.Erase(Q[i-k])
+		st.Insert(Q[i])
+		ans = min(ans, st.Last().Value()-st.Begin().Value())
+	}
+	writeLine(ans)
+}
+```
