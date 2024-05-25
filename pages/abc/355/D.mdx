@@ -1,0 +1,72 @@
+---
+title: D - Intersecting Intervals
+tags:
+  - 二分探索
+---
+
+# D - Intersecting Intervals
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="二分探索" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc355/tasks/abc355_d)
+
+区間の左端を昇順にソートして、左端が小さい順に見ていく。 以下、インデックスはソート後のインデックスとする。
+
+注目している区間の右端が $r_i$ であるとき、 $l_j \leq r_i (i \leq j)$ であるようなものの個数を数える。
+
+$i$ 番目以降のスライスに対して二分探索を行うことで、 $l_j \leq r_i (i \leq j)$ であるような $j$ の個数を数えることができる。
+
+lower_bound を使用する際は、配列にその値が含まれるかどうかを考慮する必要がある。
+
+この方法だと、計算量は $\mathrm{O}(N \log N)$ となる。
+
+[解説](https://atcoder.jp/contests/abc355/editorial/10077) の方法だともう少し高速に計算できる。
+
+## 提出コード
+
+```go
+func main() {
+	n := readInt()
+	LR := make([][2]int, n)
+	for i := 0; i < n; i++ {
+		scanIntVariables(&LR[i][0], &LR[i][1])
+	}
+	sort.Slice(LR, func(i, j int) bool {
+		return LR[i][0] < LR[j][0]
+	})
+
+	L := make([]int, n)
+	R := make([]int, n)
+	for i := 0; i < n; i++ {
+		L[i] = LR[i][0]
+		R[i] = LR[i][1]
+	}
+
+	counts := make(map[int]int)
+	for i := 0; i < n; i++ {
+		counts[L[i]]++
+	}
+
+	ans := 0
+	for i := 0; i < n; i++ {
+		r := R[i]
+		idx := sort.SearchInts(L[i:], r)
+		if counts[r] > 0 {
+			ans += idx
+			counts[r]--
+		} else {
+			ans += idx - 1
+		}
+		if counts[r] == 0 {
+			delete(counts, r)
+		}
+	}
+	writeLine(ans)
+}
+```
