@@ -40,16 +40,68 @@ type UnionFind struct {
 
 ## 計算量
 
-| 操作        | 計算量(平均)            | 計算量(最悪)    |
-| ----------- | ----------------------- | --------------- |
-| constructor | $\mathrm{O}(N)$         | $\mathrm{O}(N)$ |
-| isSame      | $\mathrm{O}(\alpha(N))$ |                 |
-| unite       | $\mathrm{O}(\alpha(N))$ |                 |
-| find(root)  | $\mathrm{O}(\alpha(N))$ |                 |
+| 操作        | 計算量(ならし)          |
+| ----------- | ----------------------- |
+| constructor | $\mathrm{O}(N)$         |
+| isSame      | $\mathrm{O}(\alpha(N))$ |
+| unite       | $\mathrm{O}(\alpha(N))$ |
+| find(root)  | $\mathrm{O}(\alpha(N))$ |
 
 ここで, $\alpha$ はアッカーマン関数の逆関数. 実質的に $\mathrm{O}(1)$ と考えて良い.
 
+ならし計算量とは、ある操作を複数回行った場合の合計の計算量を指す。
+
+ここでは、`find`を $M (\ge N)$ 回、`unite` を $N-1$ 回任意の順番で行った場合の合計の計算量が $\mathrm{O}((M+N)\alpha(N))$ となることから、それぞれの操作の計算量を $\mathrm{O}(\alpha(N))$ と表現している。
+
 ## 実装
+
+- 高速化
+
+```go
+type UnionFind struct {
+	n     int
+	root  []int
+	sizes []int
+}
+
+func newUnionFind(n int) UnionFind {
+	root := make([]int, n)
+	sizes := make([]int, n)
+	for i := 0; i < n; i++ {
+		root[i] = i
+		sizes[i] = 1
+	}
+	uf := UnionFind{n: n, root: root, sizes: sizes}
+	return uf
+}
+func (u *UnionFind) find(x int) int {
+	if u.root[x] == x {
+		return x
+	}
+	u.root[x] = u.find(u.root[x]) // 再帰で根に直接繋ぎ直す
+	return u.root[x]
+}
+func (u *UnionFind) unite(x, y int) {
+	x = u.find(x) // xを根に書き換え
+	y = u.find(y) // yを根に書き換え
+	if x == y {
+		return
+	}
+	if u.size(x) < u.size(y) {
+		x, y = y, x
+	} // xのグループの要素数がyのグループの要素数より小さくなるようにswap
+	u.sizes[x] += u.sizes[y]
+	u.root[y] = x
+}
+func (u *UnionFind) isSame(x, y int) bool {
+	return u.find(x) == u.find(y)
+}
+func (u *UnionFind) size(x int) int {
+	return u.sizes[u.find(x)]
+}
+```
+
+- 高速化 + 省メモリ
 
 ```go
 type UnionFind struct {
@@ -66,7 +118,7 @@ func newUnionFind(n int) UnionFind {
 	return uf
 }
 func (u *UnionFind) find(x int) int {
-	if u.root[x] < 0 {
+	if u.root[x] < 0 { // 負の場合は根
 		return x
 	}
 	u.root[x] = u.find(u.root[x]) // 再帰で根に直接繋ぎ直す
@@ -92,9 +144,15 @@ func (u *UnionFind) size(x int) int {
 }
 ```
 
+> 省メモリバージョンでは、root の値が負かどうかで根かどうかを判定している。
+>
+> - 負の場合は根であり、その値の絶対値がそのグループの要素数を表す。
+> - 正の場合は親のインデックスを表す。
+
 ## 例題
 
 - [典型 90 | 012 - Red Painting（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_l)
+- [鉄則本 | A67 - MST (Minimum Spanning Tree)](https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bo)
 
 ## 引用
 
