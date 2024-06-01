@@ -1,0 +1,68 @@
+# C++の環境
+
+## C++のバージョン
+
+```console
+$ g++ --version
+g++ (Homebrew GCC 13.2.0) 13.2.0
+Copyright (C) 2023 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
+
+```json filename="./vscode/c_cpp_properties.json"
+{
+  "configurations": [
+    {
+      "name": "Mac",
+      "includePath": ["${workspaceFolder}/**", "/usr/local/include/**"],
+      "defines": [],
+      "macFrameworkPath": [
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+      ],
+      "compilerPath": "/usr/local/bin/g++",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "macos-gcc-arm64"
+    }
+  ],
+  "version": 4
+}
+```
+
+## ディレクトリ構成
+
+import { FileTree } from "nextra/components";
+
+<FileTree>
+  <FileTree.Folder name=".vscode">
+    <FileTree.File name="c_cpp_properties.json" />
+  </FileTree.Folder>
+  <FileTree.Folder name="contests" defaultOpen>
+    <FileTree.Folder name="abc001" defaultOpen>
+      <FileTree.Folder name="a" defaultOpen>
+        <FileTree.Folder name="tests">
+          <FileTree.File name="sample_01.in" />
+          <FileTree.File name="sample_01.out" />
+          <FileTree.File name="sample_02.in" />
+          <FileTree.File name="sample_02.out" />
+        </FileTree.Folder>
+        <FileTree.File name="main.cpp" />
+      </FileTree.Folder>
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+## テンプレート
+
+```cpp filename="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+#define rep(i, a, n) for(int i = a; i < n; i++)
+#define rrep(i, a, n) for(int i = a; i >= n; i--)
+#define ll long long
+
+int main() {
+    
+}
+```

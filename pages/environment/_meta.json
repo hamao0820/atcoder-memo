@@ -1,5 +1,6 @@
 {
   "os": "OS",
   "go": "Go",
+  "cpp": "C++",
   "ts": "TypeScript"
 }
