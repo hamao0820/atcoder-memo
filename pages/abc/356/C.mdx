@@ -1,0 +1,116 @@
+---
+title: C - Keys
+tags:
+  - bit全探索
+---
+
+# C - Keys
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="bit全探索" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc356/tasks/abc356_c)
+
+bit 全探索を使って、全ての正しい鍵の組み合わせを試す。
+使用した鍵番号目の bit が立っている個数を数え、
+全てのテスト結果と矛盾しないものをカウントしていく。
+
+$i$ 番の鍵が使われている際、それが正しい鍵かどうかは、`1 & (b >> (a-1))` が $1$ かどうかで判定できる。\
+$R_i$ が `o` の場合、使われている正しい鍵の個数が $k$ 以上、
+`x` の場合、使われている正しい鍵の個数が $k$ 未満である必要がある。
+
+C++を使う際は、bit 演算子の優先順位や `&` と `&&` の違いに注意する。
+
+## 提出コード
+
+- Go
+
+```go
+func main() {
+	var n, m, k int
+	scanIntVariables(&n, &m, &k)
+	AA := make([][]int, m)
+	R := make([]bool, m)
+	for i := 0; i < m; i++ {
+		I := readStrings()
+		c, _ := strconv.Atoi(I[0])
+		AA[i] = make([]int, c)
+		for j := 0; j < c; j++ {
+			AA[i][j], _ = strconv.Atoi(I[j+1])
+		}
+		r := I[c+1]
+		if r == "o" {
+			R[i] = true
+		} else {
+			R[i] = false
+		}
+	}
+
+	ans := 0
+	for b := 0; b < (1 << uint(n)); b++ {
+		ok := true
+		for i := 0; i < m; i++ {
+			A := AA[i]
+			r := R[i]
+			cnt := 0
+			for _, a := range A {
+				if 1&(b>>uint(a-1)) == 1 {
+					cnt++
+				}
+			}
+			if r && cnt < k {
+				ok = false
+				break
+			}
+			if !r && cnt >= k {
+				ok = false
+				break
+			}
+		}
+		if ok {
+			ans++
+		}
+	}
+	writeLine(ans)
+}
+```
+
+- C++
+
+```cpp
+int main() {
+    ll n , m , k;
+    cin >> n >> m >> k;
+    vector<pair<vector<ll>, bool>> AA(m);
+    rep(i,0,m) {
+        ll c;cin >> c;
+        vector<ll> A(c); rep(j,0,c) cin >> A[j];
+        string r;cin >> r;
+        AA[i].first = A;
+        if (r == "o") AA[i].second = true;
+        else AA[i].second = false;
+    }
+
+    int ans = 0;
+    rep(b,0,(1<<n)) {
+        bool ok = true;
+        rep(i,0,m) {
+            if (!ok) break;
+            auto p = AA[i];
+            auto A = p.first;
+            bool r = p.second;
+            int cnt = 0;
+            for (auto a : A) if (1 & (b >> (a-1))) cnt++;
+            if (r && cnt < k) ok = false;
+            if (!r && cnt >= k) ok = false;
+        }
+        if (ok) ans++;
+    }
+    cout << ans << endl;
+}
+```
