@@ -103,6 +103,18 @@ func pow(x, n int) int {
 	return res
 }
 
+func modPow(x, n, m int) int {
+	res := 1
+	for n > 0 {
+		if n&1 == 1 {
+			res = res * x % m
+		}
+		x = x * x % m
+		n >>= 1
+	}
+	return res
+}
+
 func lcm(a, b int) int {
 	return a / gcd(a, b) * b
 }
