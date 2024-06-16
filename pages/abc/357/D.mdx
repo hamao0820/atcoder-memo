@@ -1,0 +1,91 @@
+---
+title: D - 88888888
+tags:
+  - モジュラ逆元
+  - モジュラ演算
+  - modint
+---
+
+# D - 88888888
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="モジュラ逆元" />
+- <Tag tag="モジュラ演算" />
+- <Tag tag="modint" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc357/tasks/abc357_d)
+
+$N$ の桁数を $K$ とおくと、
+
+$$
+\begin{align*}
+V_N &= \sum_{i=1}^{N}{N \cdot 10^{K(i-1)}} \\
+    &= N \cdot \sum_{i=1}^{N}{10^{K(i-1)}} \\
+    &= N \cdot \frac{10^{KN} - 1}{10^K - 1}
+\end{align*}
+$$
+
+と書ける。これを $998244353$ で割った余りを求めればよい。
+具体的に分数を計算しようとすると、オーバーフローが発生するので、冪乗を都度余りを取りながら計算したいが、割り算が含まれるためそのままでは難しい。そこで、モジュラ逆元を使って計算する。
+
+### モジュラ逆元
+
+> 整数 $a$ に対して、$a$ の逆元 $a^{-1}$ は、$a \cdot a^{-1} \equiv 1 \pmod{M}$ を満たす整数 $a^{-1}$ のことである。
+
+$a$ と $M$ が互いに素である時、 $a$ の逆元は必ず存在し、 さらに、 $M$ が素数の時、 $a$ の逆元は $a^{M-2} \mod M$ で求めることができる。これはフェルマーの小定理による。
+
+$\frac{a}{b}$ を $M$ で割った余りは、$\frac{a}{b} \equiv a \cdot b^{-1} \pmod{M}$ となる。
+
+また、制約から、 $1 \le K \le 18$ であり、このとき $10^K - 1 \mod M$ は $0$ でないことが保証される。
+
+## 提出コード
+
+- Go
+
+```go
+const MOD = 998244353
+
+func main() {
+	n := readInt()
+	d := len(strconv.Itoa(n))
+	ans := n % MOD
+	ans *= (modPow(modPow(10, d, MOD), n, MOD) - 1) % MOD
+	ans %= MOD
+	ans *= modPow(modPow(10, d, MOD)-1, MOD-2, MOD)
+	ans %= MOD
+	writeLine(ans)
+}
+```
+
+- C++
+
+```cpp
+#define MOD 998244353
+
+ll modPow(ll x, ll n, ll m) {
+    ll res = 1;
+    while (n > 0) {
+        if (n & 1) res = res * x % m;
+        x = x * x % m;
+        n >>= 1;
+    }
+    return res;
+}
+
+int main() {
+    string n_; cin >> n_;
+    int k = n_.size();
+    ll n = stoll(n_);
+    ll ans = n % MOD;
+    ans *= (modPow(modPow(10,k,MOD),n,MOD)-1) % MOD;
+    ans %= MOD;
+    ans *= modPow(modPow(10,k,MOD)-1,MOD-2,MOD);
+    ans %= MOD;
+    cout << ans << endl;
+}
+```
