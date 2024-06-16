@@ -1,0 +1,89 @@
+---
+title: C - Popcorn
+tags:
+  - bit全探索
+---
+
+# C - Popcorn
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="bit全探索" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc358/tasks/abc358_c)
+
+$m$ 種類のポップコーンを全て食べるには、$S_i$ の文字列を $2$ 進数とみたとき、
+いくつかのお店の $S_i$ の $\mathrm{bitOR}$ の $m$ ビット目までが $1$ であればよい。
+
+そのようなお店の組み合わせを全探索し、最小のお店の数を求める。全探索は bit 全探索を用いる。
+
+Go では `bits.OnesCount` でビットの 1 の数を数えることができる。C++ では `__builtin_popcount` を用いる。
+
+`b`において、$i$ ビット目が立っている時、$i$ 番目のお店を選んだことになる。
+`tmp` に選んだお店のポップコーンの $\mathrm{bitOR}$ を取り、そのビット数が $m$ であれば、その時のお店の数を求める。
+
+使用したお店の数は、`b` の立っているビット数で求めることができる。`ans` を最小のお店の数として更新していく。
+
+## 提出コード
+
+- Go
+
+```go
+func main() {
+	var n, m int
+	scanIntVariables(&n, &m)
+	S := make([]int64, n)
+	for i := 0; i < n; i++ {
+		s := readString()
+		b := strings.ReplaceAll(s, "o", "1")
+		b = strings.ReplaceAll(b, "x", "0")
+		S[i], _ = strconv.ParseInt(b, 2, 64)
+	}
+	ans := math.MaxInt64
+	for b := 0; b < 1<<uint(n); b++ {
+		var t int64
+		for i := 0; i < n; i++ {
+			if (b>>uint(i))&1 == 0 {
+				continue
+			}
+			t |= S[i]
+		}
+		if bits.OnesCount64(uint64(t)) == m {
+			ans = min(ans, bits.OnesCount(uint(b)))
+		}
+	}
+	writeLine(ans)
+}
+```
+
+- C++
+
+```cpp
+ll s_to_bit(string s){
+    ll bit = 0;
+    rep(i, 0, s.size()){
+        if (s[i] == 'o') bit += 1 << i;
+    }
+    return bit;
+}
+
+int main() {
+    ll n, m; cin >> n >> m;
+    vector<string> S(n); rep(i, 0, n) cin >> S[i];
+    vector<ll> B(n);
+    rep(i, 0, n) B[i] = s_to_bit(S[i]);
+    ll ans = 1 << 29;
+    rep(b, 0, 1 << n) {
+        ll tmp = 0;
+        rep(i, 0, n) {
+            if (b >> i & 1) tmp |= B[i];
+        }
+        if (tmp == (1 << m) - 1) ans = min(ans, (ll)__builtin_popcount(b));
+    }
+    cout << ans << endl;
+}
+```
