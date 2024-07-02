@@ -1,0 +1,53 @@
+---
+title: G - Longest Path
+tags:
+  - DP
+  - EDPC
+  - 木DP
+---
+
+# G - Longest Path
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="DP" />
+- <Tag tag="EDPC" />
+- <Tag tag="木DP" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/dp/tasks/dp_g)
+
+edting...
+
+## 提出コード
+
+```cpp
+ll f(vector<ll> &dp, vector<vector<ll>> &G, int x) {
+    if (dp[x] != -1) return dp[x];
+    ll res = 0;
+    for (auto y : G[x]) {
+        res = max(res, f(dp, G, y) + 1);
+    }
+    return dp[x] = res;
+}
+
+int main() {
+    ll n, m; cin >> n >> m;
+    vector<vector<ll>> G(n, vector<ll>(0));
+    rep(i, 0, m) {
+        ll a, b; cin >> a >> b;
+        a--; b--;
+        G[a].push_back(b);
+    }
+
+    vector<ll> dp(n, -1);
+    ll ans = 0;
+    rep(i, 0, n) {
+        ans = max(ans, f(dp, G, i));
+    }
+    cout << ans << endl;
+}
+```

@@ -1,0 +1,43 @@
+---
+title: H - Grid 1
+tags:
+  - DP
+  - EDPC
+---
+
+# H - Grid 1
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="DP" />
+- <Tag tag="EDPC" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/dp/tasks/dp_h)
+
+edting...
+
+## 提出コード
+
+```cpp
+int main() {
+    int h, w; cin >> h >> w;
+    vector<string> A(h); rep(i, 0, h) cin >> A[i];
+    vector<vector<ll>> dp(h, vector<ll>(w, 0));
+    dp[0][0] = 1;
+    rep(i, 0, h) rep(j, 0, w) {
+        if (i+1 < h && A[i+1][j] == '.') {
+            dp[i+1][j] += dp[i][j];
+            dp[i+1][j] %= 1000000007;
+        }
+        if (j+1 < w && A[i][j+1] == '.'){
+            dp[i][j+1] += dp[i][j];
+            dp[i][j+1] %= 1000000007;
+        }
+    }
+    cout << dp[h-1][w-1] << endl;
+}
+```

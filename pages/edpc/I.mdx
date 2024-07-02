@@ -1,0 +1,41 @@
+---
+title: I - Coins
+tags:
+  - DP
+  - EDPC
+  - 確率DP
+---
+
+# I - Coins
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="DP" />
+- <Tag tag="EDPC" />
+- <Tag tag="確率DP" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/dp/tasks/dp_i)
+
+edting...
+
+## 提出コード
+
+```cpp
+int main() {
+    int n; cin >> n;
+    vector<double> P(n); rep(i, 0, n) cin >> P[i];
+    vector<vector<double>> dp(n+1, vector<double>(n+1, 0));
+    dp[0][0] = 1;
+    rep(i,1,n+1) dp[i][0] = dp[i-1][0] * (1 - P[i-1]);
+    rep(i,1,n+1) rep(j,1,n+1) {
+        dp[i][j] = dp[i-1][j-1] * P[i-1] + dp[i-1][j] * (1 - P[i-1]);
+    }
+    double ans = 0;
+    rep(i, (n+1)/2, n+1) ans += dp[n][i];
+    cout << fixed << setprecision(10) << ans << endl;
+}
+```

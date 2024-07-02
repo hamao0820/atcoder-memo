@@ -1,0 +1,63 @@
+---
+title: D - Knapsack 1
+tags:
+  - DP
+  - EDPC
+---
+
+# D - Knapsack 1
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="DP" />
+- <Tag tag="EDPC" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/dp/tasks/dp_d)
+
+$i = 0,1,\dots,N, ~ j = 0,1,\dots,W$ に対して、$dp_{i,j}$ を次のように定義する。
+
+> $i$ 番目までの品物から重さの総和が $j$ 以下となるように選んだときの価値の最大値
+
+$dp_{0,j} = 0$ とする。
+
+$i$ 番目まで使って良いとき、 $i$ 番目を使うか使わないかの二通りがある。
+
+- 使わない場合は、 $i-1$ 番目までの品物で、重さの総和が $j$ 以下となるように選んだときの価値の最大値と同じ。
+- 使う場合は、 $i-1$ 番目までの品物で、重さの総和が $j - w_i$ 以下となるように選んだときの価値の最大値に、 $i$ 番目の価値を加えたもの。
+
+よって次のような漸化式が立てられる。
+
+$$
+dp_{i,j} =
+\begin{cases}
+dp_{i-1,j} & (j < w_i) \\
+\max\{dp_{i-1,j}, dp_{i-1,j-w_i} + v_i\} & (j \geq w_i)
+\end{cases}
+$$
+
+$j$ が $w_i$ 未満のときは、 $i$ 番目の品物を選べないので、価値は変わらない。
+
+最終的な答えは $dp_{N,W}$ となる。
+
+計算量は、一回の遷移が $\mathrm{O}(1)$ で行えるため、全体で $\mathrm{O}(NW)$ となる。
+
+## 提出コード
+
+```cpp
+int main() {
+    int n, w; cin >> n >> w;
+    vector<int> W(n), V(n); rep(i,0,n) cin >> W[i] >> V[i];
+    vector<vector<ll>> dp(n+1, vector<ll>(w+1, 0));
+    rep(i, 1, n+1) {
+        rep(j, 1, w+1) {
+            if (j - W[i-1] >= 0) dp[i][j] = max(dp[i-1][j], dp[i-1][j-W[i-1]] + V[i-1]);
+            else dp[i][j] = dp[i-1][j];
+        }
+    }
+    cout << dp[n][w] << endl;
+}
+```

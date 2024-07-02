@@ -1,0 +1,55 @@
+---
+title: B - Frog 2
+tags:
+  - DP
+  - EDPC
+---
+
+# B - Frog 2
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="DP" />
+- <Tag tag="EDPC" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/dp/tasks/dp_a)
+
+$dp_i$ を次のように定義する。
+
+> 足場 $i+1$ に到達するために支払うコストの最小値
+
+足場 $1$ からスタートするため、$dp_0 = 0$ とする。
+
+足場 $i$ への移動は、足場 $i-1,\dots, i-K$ の $K$ 通りがある。
+$i$ へ行くのにかかる最小コストは、足場 $i-1,\dots, i-K$ へ行くのにかかる最小コストに、それらから足場 $i$ へ行くためのコストを加えたものの最小値。
+
+よって次のような漸化式が立てられる。
+
+$$
+dp_i = \min(dp_{i-1} + |h_i - h_{i-1}|, \dots, dp_{i-K} + |h_i - h_{i-K}|)
+$$
+
+最終的な答えは $dp_{N-1}$ となる。
+
+計算量は、一回の遷移が $\mathrm{O}(K)$ で行えるため、全体で $\mathrm{O}(KN)$ となる。
+
+## 提出コード
+
+```cpp
+int main() {
+    int n, k; cin >> n >> k;
+    vector<int> H(n); rep(i, 0, n) cin >> H[i];
+    vector<int> dp(n, INT_MAX);
+    dp[0] = 0;
+    rep(i, 1, n) {
+        int m = INT_MAX;
+        rep(j,1,k+1) if (i-j >= 0) m = min(m, dp[i-j] + abs(H[i] - H[i-j]));
+        dp[i] = m;
+    }
+    cout << dp[n-1] << endl;
+}
+```
