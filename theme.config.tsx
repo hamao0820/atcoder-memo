@@ -40,7 +40,7 @@ const config: DocsThemeConfig = {
       description: "hamaoの競プロのメモ用のサイトです",
       images: [
         {
-          url: "/hamao-log-square.png",
+          url: "https://atcoder-memo.hamao.dev/hamao-log-square.png",
           width: 512,
           height: 512,
           alt: "hamaoの競プロメモ",
