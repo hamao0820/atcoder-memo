@@ -25,7 +25,7 @@ const config: DocsThemeConfig = {
       <>
         <meta
           name="og:image"
-          content="<https://atcoder-memo.hamao.dev/api/ogp>"
+          content="<https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/api/ogp>"
         />
       </>
     );
