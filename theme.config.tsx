@@ -25,7 +25,7 @@ const config: DocsThemeConfig = {
       <>
         <meta
           name="og:image"
-          content="<https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/api/ogp>"
+          content="https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/api/ogp"
         />
       </>
     );
@@ -49,7 +49,7 @@ const config: DocsThemeConfig = {
       description: "hamaoの競プロのメモ用のサイトです",
       images: [
         {
-          url: "https://atcoder-memo.hamao.dev/hamao-log-square.png",
+          url: "https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/api/ogp",
           width: 512,
           height: 512,
           alt: "hamaoの競プロメモ",
