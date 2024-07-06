@@ -42,23 +42,23 @@
 - [x] 001 [Yokan Party（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_a) [2023-10-20]
 - [x] 003 [Longest Circular Road（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_c) [2023-11-08]
 - [x] 008 [AtCounter（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_h) [2023-11-08]
-- [X] 012 [Red Painting（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_l) [2023-11-10]
-- [X] 026 [Independent Set on a Tree（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_z) [2023-11-11]
-- [X] 028 [Cluttered Paper（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ab) [2023-11-11]
-- [X] 034 [There are few types of elements（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ah) [2023-11-11]
-- [X] 042 [Multiple of 9（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ap) [2023-11-11]
+- [x] 012 [Red Painting（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_l) [2023-11-10]
+- [x] 026 [Independent Set on a Tree（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_z) [2023-11-11]
+- [x] 028 [Cluttered Paper（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ab) [2023-11-11]
+- [x] 034 [There are few types of elements（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ah) [2023-11-11]
+- [x] 042 [Multiple of 9（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_ap) [2023-11-11]
 - [ ] 043 [Maze Challenge with Lack of Sleep（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_aq)
-- [X] 058 [Original Calculator（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bf) [2023-11-13]
-- [X] 063 [Monochromatic Subgrid（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bk) [2023-11-12]
-- [X] 070 [Plant Planning（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_br) [2023-11-13]
-- [X] 072 [Loop Railway Plan（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bt) [2023-11-13]
-- [X] 085 [Multiplication 085（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_cg) [2023-11-13]
+- [x] 058 [Original Calculator（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bf) [2023-11-13]
+- [x] 063 [Monochromatic Subgrid（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bk) [2023-11-12]
+- [x] 070 [Plant Planning（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_br) [2023-11-13]
+- [x] 072 [Loop Railway Plan（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_bt) [2023-11-13]
+- [x] 085 [Multiplication 085（★4）](https://atcoder.jp/contests/typical90/tasks/typical90_cg) [2023-11-13]
 - [ ] 006 [Smallest Subsequence（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_f)
 - [ ] 013 [Passing（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_m)
 - [ ] 021 [Come Back in One Piece（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_u)
 - [ ] 029 [Long Bricks（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ac)
-- [X] 030 [K Factors（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ad) [2023-11-16]
-- [X] 036 [Max Manhattan Distance（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_aj) [2023-11-17]
+- [x] 030 [K Factors（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ad) [2023-11-16]
+- [x] 036 [Max Manhattan Distance（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_aj) [2023-11-17]
 - [ ] 037 [Don't Leave the Spice（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ak)
 - [ ] 039 [Tree Distance（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_am)
 - [ ] 051 [Typical Shop（★5）](https://atcoder.jp/contests/typical90/tasks/typical90_ay)
