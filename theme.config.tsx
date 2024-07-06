@@ -21,7 +21,14 @@ const config: DocsThemeConfig = {
     },
   },
   head: () => {
-    return <></>;
+    return (
+      <>
+        <meta
+          name="og:image"
+          content="<https://atcoder-memo.hamao.dev/api/ogp>"
+        />
+      </>
+    );
   },
   footer: {
     text: "MIT 2024 © hamao.",
