@@ -1,5 +1,5 @@
 import React from "react";
-import { DocsThemeConfig } from "nextra-theme-docs";
+import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import Link from "next/link";
 import path from "path";
 
@@ -21,11 +21,15 @@ const config: DocsThemeConfig = {
     },
   },
   head: () => {
+    const { title } = useConfig();
+    if (title == "競プロメモ") {
+      return <></>;
+    }
     return (
       <>
         <meta
           name="og:image"
-          content="https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/api/ogp"
+          content={`${process.env.NEXT_PUBLIC_APP_URL}/api/ogp?title=${title}`}
         />
       </>
     );
@@ -45,11 +49,11 @@ const config: DocsThemeConfig = {
       cardType: "summary_large_image",
     },
     openGraph: {
-      url: "https://atcoder-memo.hamao.dev/",
+      url: `${process.env.NEXT_PUBLIC_APP_URL}`,
       description: "hamaoの競プロのメモ用のサイトです",
       images: [
         {
-          url: "https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/api/ogp",
+          url: `${process.env.NEXT_PUBLIC_APP_URL}/api/ogp`,
           width: 512,
           height: 512,
           alt: "hamaoの競プロメモ",
