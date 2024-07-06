@@ -24,7 +24,7 @@ export default function handler(req: NextRequest) {
         }}
       >
         <img
-          src={`${process.env.NEXT_PUBLIC_APP_URL}/hamao-log-square.png`}
+          src="https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/hamao-log-square.png"
           alt=""
           style={{
             position: "absolute",
@@ -34,19 +34,21 @@ export default function handler(req: NextRequest) {
             height: "100%",
             objectFit: "cover",
             objectPosition: "center",
-            filter: "blur(12px)",
+            filter: hasTitle ? "blur(12px)" : "none",
           }}
         />
-        <p
-          style={{
-            fontSize: 128,
-            color: "white",
-            textShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-            fontFamily: "ヒラギノ丸ゴ Pro",
-          }}
-        >
-          {title}
-        </p>
+        {hasTitle && (
+          <p
+            style={{
+              fontSize: 128,
+              color: "white",
+              textShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+              fontFamily: "ヒラギノ丸ゴ Pro",
+            }}
+          >
+            {title}
+          </p>
+        )}
       </div>
     ),
     {

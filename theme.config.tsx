@@ -29,7 +29,7 @@ const config: DocsThemeConfig = {
       <>
         <meta
           name="og:image"
-          content={`${process.env.NEXT_PUBLIC_APP_URL}/api/ogp?title=${title}`}
+          content={`https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/api/ogp?title=${title}`}
         />
       </>
     );
@@ -49,13 +49,11 @@ const config: DocsThemeConfig = {
       cardType: "summary_large_image",
     },
     openGraph: {
-      url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+      url: "https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/",
       description: "hamaoの競プロのメモ用のサイトです",
       images: [
         {
-          url: `${process.env.NEXT_PUBLIC_APP_URL}/api/ogp`,
-          width: 512,
-          height: 512,
+          url: "https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/api/ogp",
           alt: "hamaoの競プロメモ",
         },
       ],
