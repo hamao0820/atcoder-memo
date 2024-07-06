@@ -1,5 +1,6 @@
 import React from "react";
 import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import path from "path";
 
@@ -21,9 +22,17 @@ const config: DocsThemeConfig = {
     },
   },
   head: () => {
+    const { route } = useRouter();
     const { title } = useConfig();
-    if (title == "競プロメモ") {
-      return <></>;
+    if (route === "/") {
+      return (
+        <>
+          <meta
+            name="og:image"
+            content="https://atcoder-memo.hamao.dev/hamao-log-square.png"
+          />
+        </>
+      );
     }
     return (
       <>
@@ -51,12 +60,6 @@ const config: DocsThemeConfig = {
     openGraph: {
       url: "https://atcoder-memo.hamao.dev/",
       description: "hamaoの競プロのメモ用のサイトです",
-      images: [
-        {
-          url: "https://atcoder-memo.hamao.dev/api/ogp",
-          alt: "hamaoの競プロメモ",
-        },
-      ],
     },
   }),
 };
