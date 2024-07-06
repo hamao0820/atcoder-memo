@@ -1,0 +1,120 @@
+---
+title: D - Go Stone Puzzle
+tags:
+  - BFS
+---
+
+# D - Go Stone Puzzle
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="BFS" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc361/tasks/abc361_d)
+
+かなり大きく見積もっても文字のありうる状態は $3^16 = 43046721$ で、実際はこれよりかなり少ないことから、BFS が可能。
+
+今の状態から変更できる状態を列挙し、未探索ならキューに追加することで、最短距離を求めることができる。
+
+Go なら一旦 rune の列に変換することで、文字列の swap が簡単にできる。C++ なら直接 swap が可能。
+
+一度グラフに変化して BFS しようとするとかなり煩雑になるため注意。
+
+## 提出コード
+
+- Go
+
+```go
+func main() {
+	n := readInt()
+	s := readString()
+	t := readString()
+
+	s += ".."
+	t += ".."
+
+	memo := make(map[string]int)
+	memo[s] = 0
+	que := queue.New[string]()
+	que.Push(s)
+	for !que.Empty() {
+		tmp := que.Front()
+		que.Pop()
+		d := memo[tmp]
+		l := -1
+		for i := 0; i <= n; i++ {
+			if tmp[i] == '.' {
+				l = i
+				break
+			}
+		}
+
+		T := []rune(tmp)
+		for i := 0; i <= n; i++ {
+			if tmp[i] == '.' || tmp[i+1] == '.' {
+				continue
+			}
+			T[l], T[i] = T[i], T[l]
+			T[l+1], T[i+1] = T[i+1], T[l+1]
+			if _, ok := memo[string(T)]; !ok {
+				memo[string(T)] = d + 1
+				que.Push(string(T))
+			}
+			T[l], T[i] = T[i], T[l]
+			T[l+1], T[i+1] = T[i+1], T[l+1]
+		}
+	}
+
+	if _, ok := memo[t]; ok {
+		writeLine(memo[t])
+	} else {
+		writeLine(-1)
+	}
+}
+
+```
+
+- C++
+
+```cpp
+int main(){
+    int n; cin >> n;
+    string s, t; cin >> s >> t;
+
+    s += "..", t += "..";
+
+    map<string, int> memo;
+    queue<string> que;
+    memo[s] = 0;
+    que.push(s);
+    while(!que.empty()){
+        string tmp = que.front(); que.pop();
+        int d = memo[tmp];
+        int l = -1;
+        rep(i, 0, n+1){
+            if(tmp[i] == '.'){
+                l = i;
+                break;
+            }
+        }
+
+        rep(i, 0, n+1){
+            if(tmp[i] == '.' || tmp[i+1] == '.') continue;
+            swap(tmp[i], tmp[l]), swap(tmp[i+1], tmp[l+1]);
+            if(memo.find(tmp) == memo.end()){
+                memo[tmp] = d+1;
+                que.push(tmp);
+            }
+            swap(tmp[i], tmp[l]), swap(tmp[i+1], tmp[l+1]);
+        }
+    }
+
+    if(memo.find(t) == memo.end()) cout << -1 << endl;
+    else cout << memo[t] << endl;
+    return 0;
+}
+```
