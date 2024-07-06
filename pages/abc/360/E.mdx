@@ -1,0 +1,109 @@
+---
+title: E - Random Swaps of Balls
+tags:
+  - DP
+  - 期待値DP
+---
+
+# E - Random Swaps of Balls
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="DP" />
+- <Tag tag="期待値DP" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc360/tasks/abc360_e)
+
+まず、 $i=0,1,\dots,K, ~ j=0,1,\dots,N-1$ に対して、 $dp_{i,j}$ を次のように定める。
+
+> $i$ 回の操作の後、 $j+1$ 番目に黒いボールがある確率。
+
+$dp_{0,0} = 1,~dp_{0,j} = 0 (j=1,2\dots,N-1)$ で初期化される。
+
+$i$ 回目の操作の後、 $j$ 番目に黒いボールがあるのは、次の 2 通りのいずれかである。
+
+- $i-1$ 回目の操作の後、 $j$ 番目に黒いボールがあり、 $i$ 回目の操作でそのボールが移動しなかった。
+- $i-1$ 回目の操作の後、 $l (\neq j)$ 番番目に黒いボールがあり、 $i$ 回目の操作で $j$ 番目のボールと $l$ 番目のボールが交換された。
+
+それぞれの条件付き確率は、 $\frac{(N-1)^2 + 1}{N^2} = \frac{N^2-2N+2}{N^2}$ と $\frac{2}{N^2}$ であるから、次のような漸化式が成り立つ。
+
+$$
+\begin{align*}
+dp_{i,j} &= \left( \frac{N^2-2N+2}{N^2} \right) dp_{i-1,j} + \sum_{l \neq j}{\frac{2}{N^2} dp_{i-1,l}} \\
+&= \left( \frac{N^2-2N+2}{N^2} \right) dp_{i-1,j} + \frac{2}{N^2}\sum_{l \neq j}{dp_{i-1,l}} \\
+&= \left( \frac{N^2-2N+2}{N^2} \right) dp_{i-1,j} + \frac{2}{N^2}(1-dp_{i-1,j}) \\
+&= \left( \frac{N^2-2N}{N^2} \right) dp_{i-1,j} + \frac{2}{N^2}\\
+&= \left( \frac{N-2}{N} \right) dp_{i-1,j} + \frac{2}{N^2}\\
+\end{align*}
+$$
+
+ここで、 $i=0,1,\dots,K$ に対して、 $E_i$ を次のように定める。
+
+> $i$ 回目の操作の後の黒いボールの位置の期待値。
+
+すると、$E_i = \sum_{j=0}^{N-1}{(j+1)dp_{i,j}}$ であるから、
+
+$$
+\begin{align*}
+E_i &= \sum_{j=0}^{N-1}{(j+1)dp_{i,j}} \\
+&= \sum_{j=0}^{N-1}{(j+1)\left(\left( \frac{N-2}{N} \right) dp_{i-1,j} + \frac{2}{N^2}\right)} \\
+&= \left( \frac{N-2}{N} \right) \sum_{j=0}^{N-1}{(j+1)dp_{i-1,j}} + \frac{2}{N^2} \sum_{j=0}^{N-1}{(j+1)} \\
+&= \left( \frac{N-2}{N} \right) E_{i-1} + \frac{2}{N^2} \frac{N(N+1)}{2} \\
+&= \left( \frac{N-2}{N} \right) E_{i-1} + \frac{N+1}{N} \\
+\end{align*}
+$$
+
+という漸化式が得られる。最初、黒いボールは $1$ 番目にあるから $E_0 = 1$ である。
+
+これは、 $\mathrm{O}(K)$ で計算可能。
+
+## 提出コード
+
+- Go
+
+```go
+const MOD = 998244353
+
+func main() {
+	var n, k int
+	scanIntVariables(&n, &k)
+	dp := make([]int, k+1)
+	dp[0] = 1
+	for i := 1; i <= k; i++ {
+		dp[i] = (n-2)*modPow(n, MOD-2, MOD)%MOD*dp[i-1]%MOD + (n+1)*modPow(n, MOD-2, MOD)%MOD
+		dp[i] %= MOD
+	}
+	writeLine(dp[k])
+}
+```
+
+- C++
+
+```cpp
+const ll MOD = 998244353;
+
+ll modPow(ll x, ll n, ll mod) {
+    ll res = 1;
+    while(n > 0) {
+        if(n & 1) res = res * x % mod;
+        x = x * x % mod;
+        n >>= 1;
+    }
+    return res;
+}
+
+int main() {
+    ll n,k; cin >> n >> k;
+    vector<ll> dp(k+1);
+    dp[0] = 1;
+    rep(i,1,k+1) {
+        dp[i] = (n-2)*modPow(n, MOD-2, MOD)%MOD*dp[i-1]%MOD + (n+1)*modPow(n, MOD-2, MOD)%MOD;
+		dp[i] %= MOD;
+    }
+    cout << dp[k] << endl;
+}
+```

@@ -1,0 +1,98 @@
+---
+title: D - Ghost Ants
+tags:
+  - 二分探索
+  - 尺取り法
+---
+
+# D - Ghost Ants
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="二分探索" />
+- <Tag tag="尺取り法" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc360/tasks/abc360_d)
+
+このとき次が成り立つ。
+
+> 蟻 $i$ と 蟻 $j$ がすれ違う必要十分条件は、 $S_i == 1$ かつ $S_j == 0$ かつ $0 < X_j - X_i \le 2T$ であること
+
+つまり、この条件を満たす $(i,j)$ の組みを数え上げれば良い。
+
+まず、右を向いている蟻の初期位置と左を向いている蟻の初期位置をそれぞれ $A,B$ として、それぞれソートしておく。
+
+$B_j > A_i$ なる最小の $j$ は $i$ について単調増加する。また、$B_j \le A_i + 2T$ なる最大の $j$ も $i$ について単調増加する。よって、 $j$ を尺取り法で求めることができる。
+
+毎回 $j$ を求めるために、二分探索を用いることもできる。
+
+## 提出コード
+
+- Go
+
+```go
+func main() {
+	var n, t int
+	scanIntVariables(&n, &t)
+	s := readString()
+	X := readInts()
+	X1 := make([]int, 0)
+	X2 := make([]int, 0)
+	for i := 0; i < n; i++ {
+		if s[i] == '1' {
+			X1 = append(X1, X[i])
+		} else {
+			X2 = append(X2, X[i])
+		}
+	}
+	sort.Slice(X1, func(i, j int) bool {
+		return X1[i] < X1[j]
+	})
+	sort.Slice(X2, func(i, j int) bool {
+		return X2[i] < X2[j]
+	})
+	l := 0
+	r := 0
+	ans := 0
+	for i := 0; i < len(X1); i++ {
+		for l < len(X2) && X2[l] < X1[i] {
+			l++
+		}
+		for r < len(X2) && X2[r] <= X1[i]+2*t {
+			r++
+		}
+		ans += r - l
+	}
+	writeLine(ans)
+}
+```
+
+- C++
+
+```cpp
+int main() {
+    int n,t; cin >> n >> t;
+    string s; cin >> s;
+    vector<ll> x2(0),x1(0);
+    rep(i,0,n) {
+        ll x; cin >> x;
+        if(s[i] == '0') x1.push_back(x);
+        else x2.push_back(x);
+    }
+    sort(x2.begin(), x2.end());
+    sort(x1.begin(), x1.end());
+
+    int l = 0, r = 0;
+    ll ans = 0;
+    rep(i,0,x2.size()) {
+        while(l < x1.size() && x1[l] < x2[i]) l++;
+        while(r < x1.size() && x1[r] <= x2[i] + 2*t) r++;
+        ans += r-l;
+    }
+    cout << ans << endl;
+}
+```
