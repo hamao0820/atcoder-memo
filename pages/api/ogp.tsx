@@ -24,7 +24,7 @@ export default function handler(req: NextRequest) {
         }}
       >
         <img
-          src="https://atcoder-memo-git-features-ogp-hamaos-projects.vercel.app/hamao-log-square.png"
+          src="https://atcoder-memo.hamao.dev/hamao-log-square.png"
           alt=""
           style={{
             position: "absolute",
