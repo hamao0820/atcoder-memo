@@ -20,15 +20,18 @@ const config: DocsThemeConfig = {
       );
     },
   },
+  head: () => {
+    return <></>;
+  },
   footer: {
-    text: "MIT 2023 © hamao.",
+    text: "MIT 2024 © hamao.",
   },
   sidebar: { defaultMenuCollapseLevel: 1 },
   faviconGlyph: "📝",
   useNextSeoProps: () => ({
     defaultTitle: "hamaoの競プロメモ",
     titleTemplate: "%s | hamaoの競プロメモ",
-    description: "hamaoの競プロのメモ用のサイト",
+    description: "hamaoの競プロのメモ用のサイトです",
     twitter: {
       handle: "@hamao_0820",
       site: "@hamao_0820",
@@ -36,7 +39,6 @@ const config: DocsThemeConfig = {
     },
     openGraph: {
       url: "https://atcoder-memo.hamao.dev/",
-      title: "hamaoの競プロメモ",
       description: "hamaoの競プロのメモ用のサイトです",
       images: [
         {
