@@ -1,17 +1,9 @@
 ---
 title: B - 11/11
 tags:
-  - 集合
 ---
 
 # B - 11/11
-
-## キーワード
-
-import Tag from "components/Tag";
-
--
-- <Tag tag="集合" />
 
 ## 解説
 
