@@ -28,7 +28,7 @@ const config: DocsThemeConfig = {
       return (
         <>
           <meta
-            name="og:image"
+            property="og:image"
             content="https://atcoder-memo.hamao.dev/hamao-log-square.png"
           />
         </>
@@ -37,7 +37,7 @@ const config: DocsThemeConfig = {
     return (
       <>
         <meta
-          name="og:image"
+          property="og:image"
           content={`https://atcoder-memo.hamao.dev/api/ogp?title=${title}`}
         />
       </>
