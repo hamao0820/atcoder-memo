@@ -1,0 +1,118 @@
+---
+title: E - Count Arithmetic Subsequences
+tags:
+  - DP
+---
+
+# E - Count Arithmetic Subsequences
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag={"DP"} />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc362/tasks/abc362_e)
+
+$i=1,\dots,n, ~ j=1,\dots,n, ~ l=2,\dots,n$ に対して、 $dp_{i,j,k}$ を次のように定義する。
+
+> 初項 $A_{i}$ 、第二項 $A_{j}$ 、長さ $l(\ge2)$ の等差数列の個数
+
+$l=2$ のときは、 初項と第二項によって等差数列が一意に定まるので、 $dp_{i,j,2}=1$ である。
+
+$l\ge2$ のとき、初項 $A_i$ 、第二項 $A_j$ 、長さ $l$ の等差数列の個数は、 $A_j-A_i=A_k-A_j$ を満たすすべての $k > j$ に対して、初項 $A_j$ 、第二項 $A_k$ 、長さ $l-1$ の等差数列の個数を足し合わせたものである。
+
+よって、 $l\ge2$ に対して、次の漸化式が成り立つ。
+
+$$
+dp_{i,j,l} = \sum_{\substack{k=j+1,j+2,\dots,n \\ A_k-A_j=A_j-A_i}} dp_{j,k,l-1} \quad
+$$
+
+この漸化式を用いて、 $dp_{i,j,l}$ を求める。 $i=n,n-1,\dots,1, ~ j=i+1,i+2,\dots,n, ~ l=2,3,\dots,n-i$ の順に求めることで、 $dp_{i,j,l}$ を求めることができる。
+
+最終的な答えは、各 $l$ について、 $dp_{i,j,l}$ の総和である。長さ $1$ の等差数列は $n$ 個あるので、 $l=1$ のときは $n$ である。
+
+$i,j,l$ の三次元 DP で、遷移の際に $O(n)$ の計算が必要なので、全体の時間計算量は $O(n^4)$ である。
+
+$\mathrm{O}(n^3)$ の解法もあるが、そちらは公式解説に任せる。
+
+## 提出コード
+
+- Go
+
+```go
+func main() {
+	n := readInt()
+	A := readInts()
+	dp := make([][][]int, n+1)
+	for i := 1; i <= n; i++ {
+		dp[i] = make([][]int, n+1)
+		for j := 1; j <= n; j++ {
+			dp[i][j] = make([]int, n+1)
+			if n > 1 {
+				dp[i][j][2] = 1
+			}
+		}
+	}
+
+	for i := n; i >= 1; i-- {
+		for j := i + 1; j <= n; j++ {
+			for l := 3; l <= n; l++ {
+				for k := j + 1; k <= n; k++ {
+					if A[j-1]-A[i-1] != A[k-1]-A[j-1] {
+						continue
+					}
+					dp[i][j][l] += dp[j][k][l-1]
+					dp[i][j][l] %= MOD
+				}
+			}
+		}
+	}
+
+	Ans := make([]int, n+1)
+	Ans[1] = n
+	for l := 2; l <= n; l++ {
+		for i := 1; i <= n; i++ {
+			for j := i + 1; j <= n; j++ {
+				Ans[l] += dp[i][j][l]
+				Ans[l] %= MOD
+			}
+		}
+	}
+
+	for i := 1; i <= n; i++ {
+		write(Ans[i], " ")
+	}
+	writeLine()
+}
+```
+
+- C++
+
+```cpp
+#define MOD  998244353;
+
+int main() {
+    int n; cin >> n;
+    vector<ll> A(n); rep(i,0,n) cin >> A[i];
+    vector<vector<vector<ll>>> dp(n+1,vector<vector<ll>>(n+1,vector<ll>(n+1,0)));
+    if (n > 1) rep(i,1,n+1) rep(j,i+1,n+1) dp[i][j][2] = 1;
+
+    rrep(i,n,1) rep(j,i+1,n+1) rep(l,3,n+1) rep(k,j+1,n+1) {
+        if (A[j-1]-A[i-1] != A[k-1]-A[j-1]) continue;
+        dp[i][j][l] += dp[j][k][l-1];
+        dp[i][j][l] %= MOD;
+    }
+
+    vector<ll> Ans(n+1,0);
+    Ans[1] = n;
+    rep(l,2,n+1) rep(i,1,n+1) rep(j,i+1,n+1) {
+        Ans[l] += dp[i][j][l];
+        Ans[l] %= MOD;
+    }
+
+    rep(i,1,n+1) cout << Ans[i] << " "; cout << endl;
+}
+```

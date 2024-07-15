@@ -1,0 +1,105 @@
+---
+title: D - Shortest Path 3
+tags:
+  - ダイクストラ法
+  - 頂点倍化
+---
+
+# D - Shortest Path 3
+
+## キーワード
+
+import Tag from "components/Tag";
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc362/tasks/abc362_d)
+
+ダイクストラ法を使う。ただし、頂点にも重みがあるので、暫定距離に頂点の重みも加える。
+
+ダイクストラ法は [ダイクストラ法](../../algorithm/dijkstra.mdx)を参照。
+
+## 提出コード
+
+- Go
+
+```go
+func main() {
+	var n, m int
+	scanIntVariables(&n, &m)
+	A := readInts()
+	G := make([][][2]int, n+1)
+	for i := 1; i <= n; i++ {
+		G[i] = [][2]int{}
+	}
+	for i := 0; i < m; i++ {
+		var a, b, c int
+		scanIntVariables(&a, &b, &c)
+		G[a] = append(G[a], [2]int{b, c})
+		G[b] = append(G[b], [2]int{a, c})
+	}
+	D := make([]int, n+1) // 頂点1からの最短経路のコスト
+	for i := 1; i <= n; i++ {
+		D[i] = math.MaxInt64
+	}
+	D[1] = A[0]
+	kakutei := make([]bool, n+1)
+	q := priorityqueue.New[[2]int](func(a, b [2]int) int { return a[0] - b[0] })
+	q.Push([2]int{D[1], 1})
+	for !q.Empty() {
+		u := q.Pop()[1]
+		if kakutei[u] {
+			continue
+		}
+		kakutei[u] = true
+		for _, e := range G[u] {
+			v, c := e[0], e[1]
+			if D[v] > D[u]+c+A[v-1] {
+				D[v] = D[u] + c + A[v-1]
+				q.Push([2]int{D[v], v})
+			}
+		}
+	}
+	for i := 2; i <= n; i++ {
+		write(D[i], " ")
+	}
+	writeLine()
+}
+```
+
+- C++
+
+```cpp
+int main() {
+    int n,m; cin >> n >> m;
+    vector<ll> A(n); rep(i,0,n) cin >> A[i];
+    vector<vector<pair<int,ll>>> G(n);
+    rep(i,0,m) {
+        int u,v; ll w; cin >> u >> v >> w;
+        u--; v--;
+        G[u].push_back({v,w});
+        G[v].push_back({u,w});
+    }
+    vector<ll> D(n,LLONG_MAX);
+    D[0] = A[0];
+    auto cmp = [](pair<ll,int> a, pair<ll,int> b) { return a.first > b.first; };
+    priority_queue<pair<ll, int>, vector<pair<ll,int>>, decltype(cmp)> que(cmp);
+    que.push({D[0],0});
+    while(!que.empty()) {
+        auto p = que.top(); que.pop();
+        int u = p.second;
+        ll d = -p.first;
+        if (D[u] < d) continue;
+        for(auto e: G[u]) {
+            int v = e.first;
+            ll w = e.second;
+            if (D[v] > D[u] + w + A[v]) {
+                D[v] = D[u] + w + A[v];
+                que.push({-D[v],v});
+            }
+        }
+    }
+
+    rep(i,1,n) cout << D[i] << endl;
+}
+```
