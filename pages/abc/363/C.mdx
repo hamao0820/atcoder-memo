@@ -1,0 +1,93 @@
+---
+title: C - Avoid K Palindrome 2
+tags:
+  - permutation
+---
+
+# C - Avoid K Palindrome 2
+
+## キーワード
+
+import Tag from "components/Tag";
+
+- <Tag tag="permutation" />
+
+## 解説
+
+[問題](https://atcoder.jp/contests/abc363/tasks/abc363_c)
+
+$S$ の並び替えであり得るものを全探索する。 $S$ の全探索は、 $S$ をソートしてから `next_permutation` を使うと簡単に書ける。
+
+`next_permutaion`は辞書順で次のものを返すため、重複は起こらない。Go の`nextPermutaion`は[nextPermutation](../../library/nextPermutation.mdx)を参考。
+
+回文判定も愚直にやるだけでよい。
+
+計算量は $O(N! \cdot NK)$ となる。
+
+## 提出コード
+
+- Go
+
+```go
+func check(s string, k int) bool {
+	n := len(s)
+	for i := 0; i < n-k+1; i++ {
+		ok := true
+		for j := 0; j < k/2; j++ {
+			if s[i+j] != s[i+k-j-1] {
+				ok = false
+			}
+		}
+		if ok {
+			return true
+		}
+	}
+	return false
+}
+
+func main() {
+	var n, k int
+	scanIntVariables(&n, &k)
+	s := readString()
+	S := strings.Split(s, "")
+	sort.Slice(S, func(i, j int) bool {
+		return S[i] < S[j]
+	})
+	ans := 0
+	for {
+		t := strings.Join(S, "")
+		if !check(t, k) {
+			ans++
+		}
+		if !nextPermutation(S, func(a, b string) int { return int(b[0]) - int(a[0]) }) {
+			break
+		}
+	}
+	writeLine(ans)
+}
+```
+
+- C++
+
+```cpp
+bool check(string s, int k) {
+    int n = s.size();
+    rep(i, 0, n - k + 1) {
+        bool ok = true;
+        rep(j, 0, k / 2) if (s[i + j] != s[i + k - j - 1]) ok = false;
+        if (ok) return true;
+    }
+    return false;
+}
+
+int main() {
+    int n,k; cin >> n >> k;
+    string s; cin >> s;
+    sort(s.begin(), s.end());
+    int ans = 0;
+    do {
+        if (!check(s, k)) ans++;
+    } while (next_permutation(s.begin(), s.end()));
+    cout << ans << endl;
+}
+```
